@@ -12,7 +12,7 @@ export async function Activity({
   ctx: FrameContext<{ State: State }>;
   id: number;
 }) {
-  const data = await getProject(id);
+  const data = await getProject({ projectId: id });
 
   return ctx.res({
     image: (

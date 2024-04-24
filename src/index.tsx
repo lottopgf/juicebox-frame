@@ -21,22 +21,22 @@ export const app = new Frog<{ State: State }>({
   },
   imageAspectRatio: "1:1",
   imageOptions: {
-    debug: false,
-    width: 1200,
-    height: 1200,
+    debug: import.meta.env.VITE_FRAME_DEBUG_MODE === "true",
+    width: 1080,
+    height: 1080,
     fonts: [
       {
         name: "Agrandir",
         weight: 500,
         data: readFileSync(
-          path.resolve(process.cwd(), "./fonts/PPAgrandir-Medium.ttf"),
+          path.resolve(process.cwd(), "./fonts/PPAgrandir-Medium.ttf")
         ),
       },
       {
         name: "Beatrice",
-        weight: 500,
+        weight: 400,
         data: readFileSync(
-          path.resolve(process.cwd(), "./fonts/Beatrice-Medium.ttf"),
+          path.resolve(process.cwd(), "./fonts/Beatrice-Regular.ttf")
         ),
       },
     ],

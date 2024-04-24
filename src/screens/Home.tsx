@@ -1,9 +1,21 @@
+import { getCycle } from "@/api/cycle";
 import { getProject } from "@/api/project";
 import { Container } from "@/components/Container";
+import { IconArrow } from "@/graphics/IconArrow";
+import { IconEthereum } from "@/graphics/IconEthereum";
+import { LogoJuicebox } from "@/graphics/LogoJuicebox";
 import { State } from "@/index";
 import { formatEther } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
+import { getTokensPerEth, getTrendingPercentage } from "@/lib/juicebox";
+import {
+  COLOR_BG_SPLIT,
+  COLOR_BG_SPLIT_DARK,
+  COLOR_BG_SPLIT_LIGHT,
+  COLOR_TEXT_SPLIT,
+} from "@/styles/colors";
 import { Button, FrameContext } from "frog";
+import { twMerge } from "tailwind-merge";
 
 export async function Home({
   ctx,
@@ -12,33 +24,109 @@ export async function Home({
   ctx: FrameContext<{ State: State }>;
   id: number;
 }) {
-  const data = await getProject(id);
+  const projectData = await getProject({ projectId: id });
 
-  const logoURL = ipfsURL(cidFromURL(data.metadata.logoUri));
+  const { latestFundingCycle, metadata, paymentsCount, volume } = projectData;
+
+  const cycleData = await getCycle({
+    projectId: id,
+    cycleId: latestFundingCycle,
+  });
+
+  const tokensPerEth = getTokensPerEth({
+    reservedRate: cycleData.reservedRate,
+    weight: cycleData.weight,
+  });
+
+  const trendingPercentage = getTrendingPercentage({
+    totalVolume: projectData.volume,
+    trendingVolume: projectData.trendingVolume,
+  });
+
+  const logoURL = ipfsURL(cidFromURL(projectData.metadata.logoUri));
 
   return ctx.res({
     image: (
-      <Container>
-        <div tw="flex-shrink-0 flex flex-col items-end bg-[#201E29] w-full px-8 py-6">
-          <span>view on Juicebox</span>
-          <span tw="text-6xl">xxd xxh xxm left</span>
+      <Container tw="text-neutral-900">
+        <div
+          tw={twMerge(
+            "h-[132px] flex-shrink-0 flex justify-end items-center w-full px-9",
+            COLOR_BG_SPLIT
+          )}
+          style={{ fontFamily: "Agrandir" }}
+        >
+          <IconArrow tw="w-[60px] h-[60px]" />
+          <span tw="ml-3 mr-6 text-[42px]">view on</span>
+          <LogoJuicebox tw="w-[220px] h-[50px]" />
         </div>
-        <div tw="flex-1 flex flex-col px-8 bg-[#16141D]" style={{ gap: 32 }}>
+        <div
+          tw={twMerge(
+            "relative flex-1 flex flex-col px-9",
+            COLOR_BG_SPLIT_LIGHT
+          )}
+        >
           <img
             src={logoURL}
-            tw="w-[300px] h-[300px] -mt-[118px] border-[#16141D] border-[10px] rounded-3xl"
+            tw="w-[336px] h-[336px] -mt-[96px] mb-9 border-black bg-black border-[6px] rounded-3xl"
           />
-          <span tw="text-7xl" style={{ fontFamily: "Agrandir" }}>
-            {data.metadata.name}
+          <div
+            tw="absolute right-9 top-9 flex text-right"
+            style={{ fontFamily: "Agrandir", gap: 48 }}
+          >
+            <div tw="flex flex-col items-end">
+              <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
+                Payments
+              </span>
+              <span tw="text-[54px]">
+                {paymentsCount.toLocaleString("en-US")}
+              </span>
+            </div>
+            <div tw="flex flex-col items-end">
+              <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
+                Last 7 days
+              </span>
+              <span tw="text-[54px]">
+                +
+                {trendingPercentage === Infinity
+                  ? "∞"
+                  : trendingPercentage.toLocaleString("en-US")}
+                %
+              </span>
+            </div>
+          </div>
+
+          <span
+            tw="mb-6 text-7xl font-medium"
+            style={{ fontFamily: "Agrandir" }}
+          >
+            {metadata.name}
           </span>
-          <span>Payments: {data.paymentsCount}</span>
-          <span>Total Raised: {formatEther(data.volume)} ETH</span>
-          <span>Last 7 Days: ???%</span>
-          <span>{data.metadata.projectTagline}</span>
+
+          <span tw="text-[42px] font-normal leading-[1.2]">
+            {metadata.projectTagline}
+          </span>
         </div>
-        <div tw="flex-shrink-0 flex justify-center bg-[#201E29] w-full px-8 py-6">
-          <span>Receive xxx $TOKEN per ETH paid</span>
+        <div
+          tw={twMerge(
+            "flex items-center justify-center px-9 py-[27px] text-6xl",
+            COLOR_BG_SPLIT,
+            COLOR_TEXT_SPLIT
+          )}
+          style={{ gap: 12, fontFamily: "Agrandir" }}
+        >
+          <IconEthereum tw="w-[60px] h-[60px]" />
+          <span>{formatEther(volume)} ETH raised</span>
         </div>
+        {tokensPerEth > 0n && (
+          <div
+            tw={twMerge(
+              "flex-shrink-0 flex justify-center w-full px-8 py-6 text-[54px]",
+              COLOR_BG_SPLIT_DARK
+            )}
+          >
+            <span>Receive {formatEther(tokensPerEth)} tokens per ETH paid</span>
+          </div>
+        )}
       </Container>
     ),
     intents: [

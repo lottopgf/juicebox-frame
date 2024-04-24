@@ -8,20 +8,22 @@
     "deploy": "vercel"
   },
   "dependencies": {
-    "frog": "^0.7.12",
+    "frog": "^0.8.6",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
-    "hono": "^4.1.4",
+    "hono": "^4.2.7",
     "sanitize-html": "^2.13.0",
+    "tailwind-merge": "^2.3.0",
     "valibot": "^0.30.0",
-    "viem": "^2.9.1"
+    "viem": "^2.9.26"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "@types/sanitize-html": "^2.11.0",
     "prettier": "^3.2.5",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3",
-    "vercel": "^33.6.1",
-    "vite": "^5.2.6"
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5",
+    "vercel": "^34.1.2",
+    "vite": "^5.2.10"
   }
 }

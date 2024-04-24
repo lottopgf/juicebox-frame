@@ -1,4 +1,13 @@
-import { any, array, boolean, number, object, string } from "valibot";
+import {
+  any,
+  array,
+  boolean,
+  number,
+  object,
+  optional,
+  string,
+  value,
+} from "valibot";
 
 export const METADATA_V10_SCHEMA = object({
   name: string(),
@@ -12,13 +21,15 @@ export const METADATA_V10_SCHEMA = object({
   tokens: array(any()),
   tags: array(string()),
   domain: string(),
-  version: number(),
+  version: number([value(10)]),
   projectTagline: string(),
   payDisclosure: string(),
-  projectRequiredOFACCheck: boolean(),
-  nftPaymentSuccessModal: object({
-    ctaText: string(),
-    ctaLink: string(),
-    content: string(),
-  }),
+  projectRequiredOFACCheck: optional(boolean()),
+  nftPaymentSuccessModal: optional(
+    object({
+      ctaText: string(),
+      ctaLink: string(),
+      content: string(),
+    })
+  ),
 });
