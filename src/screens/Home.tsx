@@ -1,10 +1,12 @@
+/** @jsxImportSource frog/jsx */
+/* eslint-disable @next/next/no-img-element */
+
 import { getCycle } from "@/api/cycle";
 import { getProject } from "@/api/project";
 import { Container } from "@/components/Container";
 import { IconArrow } from "@/graphics/IconArrow";
 import { IconEthereum } from "@/graphics/IconEthereum";
 import { LogoJuicebox } from "@/graphics/LogoJuicebox";
-import { State } from "@/index";
 import { formatEther } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTokensPerEth, getTrendingPercentage } from "@/lib/juicebox";
@@ -17,13 +19,7 @@ import {
 import { Button, FrameContext } from "frog";
 import { twMerge } from "tailwind-merge";
 
-export async function Home({
-  ctx,
-  id,
-}: {
-  ctx: FrameContext<{ State: State }>;
-  id: number;
-}) {
+export async function Home({ ctx, id }: { ctx: FrameContext; id: number }) {
   const projectData = await getProject({ projectId: id });
 
   const { latestFundingCycle, metadata, paymentsCount, volume } = projectData;
@@ -68,6 +64,7 @@ export async function Home({
           <img
             src={logoURL}
             tw="w-[336px] h-[336px] -mt-[96px] mb-9 border-black bg-black border-[6px] rounded-3xl"
+            alt=""
           />
           <div
             tw="absolute right-9 top-9 flex text-right"
@@ -130,9 +127,15 @@ export async function Home({
       </Container>
     ),
     intents: [
-      <Button action={`/${id}/activity`}>Activity</Button>,
-      <Button action={`/${id}/about`}>About</Button>,
-      <Button action={`/${id}/rewards`}>Rewards</Button>,
+      <Button key="activity" action={`/${id}/activity`}>
+        Activity
+      </Button>,
+      <Button key="about" action={`/${id}/about`}>
+        About
+      </Button>,
+      <Button key="rewards" action={`/${id}/rewards`}>
+        Rewards
+      </Button>,
     ],
   });
 }

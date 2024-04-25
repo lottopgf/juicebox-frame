@@ -1,27 +1,22 @@
+/** @jsxImportSource frog/jsx */
+
 import { About } from "@/screens/About";
 import { Activity } from "@/screens/Activity";
 import { Home } from "@/screens/Home";
 import { Rewards } from "@/screens/Rewards";
 import { Frog } from "frog";
 import { devtools } from "frog/dev";
+import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
-import { handle } from "frog/vercel";
-import { readFileSync } from "fs";
-import path from "path";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
-export interface State {
-  screen: "home";
-}
-
-export const app = new Frog<{ State: State }>({
+const app = new Frog({
   assetsPath: "/",
   basePath: "/",
-  initialState: {
-    screen: "home",
-  },
   imageAspectRatio: "1:1",
   imageOptions: {
-    debug: import.meta.env.VITE_FRAME_DEBUG_MODE === "true",
+    debug: process.env.FRAME_DEBUG_MODE === "true",
     width: 1080,
     height: 1080,
     fonts: [
@@ -42,11 +37,6 @@ export const app = new Frog<{ State: State }>({
     ],
   },
 });
-
-// @ts-ignore
-const isEdgeFunction = typeof EdgeFunction !== "undefined";
-const isProduction = isEdgeFunction || import.meta.env?.MODE !== "development";
-devtools(app, isProduction ? { assetsPath: "/.frog" } : { serveStatic });
 
 app.frame("/:id", (ctx) => {
   const id = Number(ctx.req.param("id"));
@@ -71,6 +61,8 @@ app.frame("/:id/rewards", (ctx) => {
 
   return Rewards({ ctx, id });
 });
+
+devtools(app, { serveStatic });
 
 export const GET = handle(app);
 export const POST = handle(app);
