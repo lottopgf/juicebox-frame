@@ -1,17 +1,12 @@
+/** @jsxImportSource frog/jsx */
+
 import { getProject } from "@/api/project";
 import { BackButton } from "@/components/BackButton";
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
-import { State } from "@/index";
 import { Button, FrameContext } from "frog";
 
-export async function Rewards({
-  ctx,
-  id,
-}: {
-  ctx: FrameContext<{ State: State }>;
-  id: number;
-}) {
+export async function Rewards({ ctx, id }: { ctx: FrameContext; id: number }) {
   const data = await getProject({ projectId: id });
 
   return ctx.res({
@@ -24,9 +19,13 @@ export async function Rewards({
       </Container>
     ),
     intents: [
-      <BackButton id={id} />,
-      <Button action={`/${id}/about`}>About</Button>,
-      <Button action={`/${id}/activity`}>Activity</Button>,
+      <BackButton key="back" id={id} />,
+      <Button key="about" action={`/${id}/about`}>
+        About
+      </Button>,
+      <Button key="activity" action={`/${id}/activity`}>
+        Activity
+      </Button>,
     ],
   });
 }

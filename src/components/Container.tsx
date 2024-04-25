@@ -1,7 +1,15 @@
-import type { Child } from "hono/jsx";
+/** @jsxImportSource frog/jsx */
+
+import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-export function Container({ children, tw }: { children?: Child; tw?: string }) {
+export function Container({
+  children,
+  tw,
+}: {
+  children?: ReactNode;
+  tw?: string;
+}) {
   return (
     <div
       tw={twMerge(

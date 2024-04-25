@@ -1,5 +1,8 @@
+/** @jsxImportSource frog/jsx */
+
 export function IconEthereum({ tw }: { tw?: string }) {
   return (
+    // @ts-ignore
     <svg viewBox="0 0 20 20" fill="none" tw={tw}>
       <path
         fill-rule="evenodd"
