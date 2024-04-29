@@ -78,18 +78,16 @@ export async function Home({ ctx, id }: { ctx: FrameContext; id: number }) {
                 {paymentsCount.toLocaleString("en-US")}
               </span>
             </div>
-            <div tw="flex flex-col items-end">
-              <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
-                Last 7 days
-              </span>
-              <span tw="text-[54px]">
-                +
-                {trendingPercentage === Infinity
-                  ? "∞"
-                  : trendingPercentage.toLocaleString("en-US")}
-                %
-              </span>
-            </div>
+            {trendingPercentage !== Infinity && (
+              <div tw="flex flex-col items-end">
+                <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
+                  Last 7 days
+                </span>
+                <span tw="text-[54px]">
+                  +{trendingPercentage.toLocaleString("en-US")}%
+                </span>
+              </div>
+            )}
           </div>
 
           <span
@@ -117,11 +115,11 @@ export async function Home({ ctx, id }: { ctx: FrameContext; id: number }) {
         {tokensPerEth > 0n && (
           <div
             tw={twMerge(
-              "flex-shrink-0 flex justify-center w-full px-8 py-6 text-[54px]",
+              "flex-shrink-0 flex justify-center w-full px-8 py-6 text-5xl text-center",
               COLOR_BG_SPLIT_DARK
             )}
           >
-            <span>Receive {formatEther(tokensPerEth)} tokens per ETH paid</span>
+            Receive {formatEther(tokensPerEth)} tokens per ETH paid
           </div>
         )}
       </Container>
