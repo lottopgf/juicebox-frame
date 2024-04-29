@@ -23,7 +23,7 @@ export const METADATA_V10_SCHEMA = object({
   domain: string(),
   version: number([value(10)]),
   projectTagline: string(),
-  payDisclosure: string(),
+  payDisclosure: optional(string()),
   projectRequiredOFACCheck: optional(boolean()),
   nftPaymentSuccessModal: optional(
     object({
