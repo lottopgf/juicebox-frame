@@ -3,7 +3,7 @@ export function ipfsURL(cid?: string) {
     return undefined;
   }
 
-  return `https://cloudflare-ipfs.com/ipfs/${cid}`;
+  return `https://jbm.infura-ipfs.io/ipfs/${cid}`;
 }
 
 export function cidFromURL(url?: string) {
