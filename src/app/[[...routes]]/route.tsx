@@ -12,6 +12,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 const app = new Frog({
+title: "Juicebox",
   assetsPath: "/",
   basePath: "/",
     imageAspectRatio: "1:1",
