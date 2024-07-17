@@ -4,13 +4,13 @@ import { METADATA_V10_SCHEMA } from "@/schemas/metadataV10";
 import { gql } from "graphql-request";
 import {
   array,
-  bigint,
-  coerce,
   nullable,
   number,
   object,
   parse,
+  pipe,
   string,
+  transform,
 } from "valibot";
 
 const projectQuery = gql`
@@ -45,10 +45,22 @@ const ProjectSchema = object({
   owner: string(),
   metadataUri: string(),
   paymentsCount: number(),
-  volume: coerce(bigint(), (input) => BigInt(String(input))),
-  volumeUSD: coerce(bigint(), (input) => BigInt(String(input))),
-  trendingVolume: coerce(bigint(), (input) => BigInt(String(input))),
-  currentBalance: coerce(bigint(), (input) => BigInt(String(input))),
+  volume: pipe(
+    string(),
+    transform((input) => BigInt(String(input)))
+  ),
+  volumeUSD: pipe(
+    string(),
+    transform((input) => BigInt(String(input)))
+  ),
+  trendingVolume: pipe(
+    string(),
+    transform((input) => BigInt(String(input)))
+  ),
+  currentBalance: pipe(
+    string(),
+    transform((input) => BigInt(String(input)))
+  ),
   latestFundingCycle: number(),
   nftCollections: array(RewardSchema),
 });

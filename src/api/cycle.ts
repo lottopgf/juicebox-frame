@@ -1,13 +1,14 @@
 import { graphClient } from "@/lib/graph";
 import { gql } from "graphql-request";
 import {
-  bigint,
   boolean,
-  coerce,
   nullable,
   number,
   object,
   parse,
+  pipe,
+  string,
+  transform,
 } from "valibot";
 
 const cycleQuery = gql`
@@ -25,7 +26,10 @@ const cycleQuery = gql`
 const CycleSchema = object({
   startTimestamp: number(),
   endTimestamp: nullable(number()),
-  weight: coerce(bigint(), (input) => BigInt(String(input))),
+  weight: pipe(
+    string(),
+    transform((input) => BigInt(String(input)))
+  ),
   reservedRate: number(),
   useDataSourceForPay: boolean(),
 });
