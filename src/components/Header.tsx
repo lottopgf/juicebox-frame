@@ -1,3 +1,5 @@
+/** @jsxImportSource frog/jsx */
+
 export function Header({ project, page }: { project: string; page: string }) {
   return (
     <div

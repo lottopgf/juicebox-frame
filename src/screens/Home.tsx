@@ -1,38 +1,44 @@
 /** @jsxImportSource frog/jsx */
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/jsx-key, @next/next/no-img-element */
 
-import { getCycle } from "@/api/cycle";
 import { getProject } from "@/api/project";
 import { Container } from "@/components/Container";
+import { TokenRewards } from "@/components/TokenRewards";
 import { IconArrow } from "@/graphics/IconArrow";
 import { IconEthereum } from "@/graphics/IconEthereum";
 import { LogoJuicebox } from "@/graphics/LogoJuicebox";
 import { formatEther } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
-import { getTokensPerEth, getTrendingPercentage } from "@/lib/juicebox";
+import { getTrendingPercentage } from "@/lib/juicebox";
+import { getProjectId } from "@/lib/parameters";
 import {
   COLOR_BG_SPLIT,
   COLOR_BG_SPLIT_DARK,
   COLOR_BG_SPLIT_LIGHT,
   COLOR_TEXT_SPLIT,
 } from "@/styles/colors";
-import { Button, FrameContext } from "frog";
+import { Button, FrameContext, type ImageContext } from "frog";
 import { twMerge } from "tailwind-merge";
 
-export async function Home({ ctx, id }: { ctx: FrameContext; id: number }) {
-  const projectData = await getProject({ projectId: id });
+export async function HomeScreen(ctx: FrameContext) {
+  const projectId = getProjectId(ctx);
+
+  return ctx.res({
+    image: `/${projectId}/images/home`,
+    intents: [
+      <Button action={`/${projectId}/activity`}>Activity</Button>,
+      <Button action={`/${projectId}/about`}>About</Button>,
+      <Button action={`/${projectId}/rewards`}>Rewards</Button>,
+    ],
+  });
+}
+
+export async function HomeImage(ctx: ImageContext) {
+  const projectId = getProjectId(ctx);
+
+  const projectData = await getProject({ projectId });
 
   const { latestFundingCycle, metadata, paymentsCount, volume } = projectData;
-
-  const cycleData = await getCycle({
-    projectId: id,
-    cycleId: latestFundingCycle,
-  });
-
-  const tokensPerEth = getTokensPerEth({
-    reservedRate: cycleData.reservedRate,
-    weight: cycleData.weight,
-  });
 
   const trendingPercentage = getTrendingPercentage({
     totalVolume: projectData.volume,
@@ -112,28 +118,12 @@ export async function Home({ ctx, id }: { ctx: FrameContext; id: number }) {
           <IconEthereum tw="w-[60px] h-[60px]" />
           <span>{formatEther(volume)} ETH raised</span>
         </div>
-        {tokensPerEth > 0n && (
-          <div
-            tw={twMerge(
-              "flex-shrink-0 flex justify-center w-full px-8 py-6 text-5xl text-center",
-              COLOR_BG_SPLIT_DARK
-            )}
-          >
-            Receive {formatEther(tokensPerEth)} tokens per ETH paid
-          </div>
-        )}
+        <TokenRewards
+          projectId={projectId}
+          cycleId={latestFundingCycle}
+          tw={COLOR_BG_SPLIT_DARK}
+        />
       </Container>
     ),
-    intents: [
-      <Button key="activity" action={`/${id}/activity`}>
-        Activity
-      </Button>,
-      <Button key="about" action={`/${id}/about`}>
-        About
-      </Button>,
-      <Button key="rewards" action={`/${id}/rewards`}>
-        Rewards
-      </Button>,
-    ],
   });
 }

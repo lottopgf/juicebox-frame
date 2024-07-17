@@ -1,13 +1,16 @@
 /** @jsxImportSource frog/jsx */
+/* eslint-disable react/jsx-key */
 
 import { getProject } from "@/api/project";
 import { BackButton } from "@/components/BackButton";
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
-import { Button, FrameContext } from "frog";
+import { getProjectId } from "@/lib/parameters";
+import { Button, FrameContext, type ImageContext } from "frog";
 
-export async function Activity({ ctx, id }: { ctx: FrameContext; id: number }) {
-  const data = await getProject({ projectId: id });
+export async function ActivityImage(ctx: ImageContext) {
+  const projectId = getProjectId(ctx);
+  const data = await getProject({ projectId });
 
   return ctx.res({
     image: (
@@ -18,14 +21,18 @@ export async function Activity({ ctx, id }: { ctx: FrameContext; id: number }) {
         </div>
       </Container>
     ),
+  });
+}
+
+export async function ActivityScreen(ctx: FrameContext) {
+  const projectId = getProjectId(ctx);
+
+  return ctx.res({
+    image: `/${projectId}/images/activity`,
     intents: [
-      <BackButton key="back" id={id} />,
-      <Button key="about" action={`/${id}/about`}>
-        About
-      </Button>,
-      <Button key="rewards" action={`/${id}/rewards`}>
-        Rewards
-      </Button>,
+      <BackButton id={projectId} />,
+      <Button action={`/${projectId}/about`}>About</Button>,
+      <Button action={`/${projectId}/rewards`}>Rewards</Button>,
     ],
   });
 }

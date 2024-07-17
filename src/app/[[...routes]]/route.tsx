@@ -1,9 +1,9 @@
 /** @jsxImportSource frog/jsx */
 
-import { About } from "@/screens/About";
-import { Activity } from "@/screens/Activity";
-import { Home } from "@/screens/Home";
-import { Rewards } from "@/screens/Rewards";
+import { AboutImage, AboutScreen } from "@/screens/About";
+import { ActivityImage, ActivityScreen } from "@/screens/Activity";
+import { HomeImage, HomeScreen } from "@/screens/Home";
+import { RewardsImage, RewardsScreen } from "@/screens/Rewards";
 import { Frog } from "frog";
 import { devtools } from "frog/dev";
 import { handle } from "frog/next";
@@ -12,10 +12,10 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 const app = new Frog({
-title: "Juicebox",
+  title: "Juicebox",
   assetsPath: "/",
   basePath: "/",
-    imageAspectRatio: "1:1",
+  imageAspectRatio: "1:1",
   imageOptions: {
     debug: process.env.FRAME_DEBUG_MODE === "true",
     width: 1080,
@@ -39,29 +39,17 @@ title: "Juicebox",
   },
 });
 
-app.frame("/:id", (ctx) => {
-  const id = Number(ctx.req.param("id"));
+app.frame("/:id", HomeScreen);
+app.image("/:id/images/home", HomeImage);
 
-  return Home({ ctx, id });
-});
+app.frame("/:id/about", AboutScreen);
+app.image("/:id/images/about", AboutImage);
 
-app.frame("/:id/about", (ctx) => {
-  const id = Number(ctx.req.param("id"));
+app.frame("/:id/activity", ActivityScreen);
+app.image("/:id/images/activity", ActivityImage);
 
-  return About({ ctx, id });
-});
-
-app.frame("/:id/activity", (ctx) => {
-  const id = Number(ctx.req.param("id"));
-
-  return Activity({ ctx, id });
-});
-
-app.frame("/:id/rewards", (ctx) => {
-  const id = Number(ctx.req.param("id"));
-
-  return Rewards({ ctx, id });
-});
+app.frame("/:id/rewards", RewardsScreen);
+app.image("/:id/images/rewards", RewardsImage);
 
 devtools(app, { serveStatic });
 
