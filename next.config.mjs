@@ -1,12 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  redirects: async () => ([
-    {
-      source: '/',
-      destination: 'https://juicebox.money',
-      permanent: true
-    }
-  ])
-}
+const nextConfig = {};
 
-export default nextConfig
+export default nextConfig;

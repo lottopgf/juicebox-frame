@@ -14,8 +14,7 @@ import path from "node:path";
 const app = new Frog({
   assetsPath: "/",
   basePath: "/",
-  browserLocation: "https://juicebox.money/v2/p/:id",
-  imageAspectRatio: "1:1",
+    imageAspectRatio: "1:1",
   imageOptions: {
     debug: process.env.FRAME_DEBUG_MODE === "true",
     width: 1080,
