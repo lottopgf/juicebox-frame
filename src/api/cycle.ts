@@ -51,7 +51,7 @@ export async function getCycle({
   const rawCycleData = data.fundingCycles.at(0);
 
   if (!rawCycleData) {
-    throw new Error("Cycle not found");
+    return null;
   }
 
   const result = safeParse(CycleSchema, rawCycleData);

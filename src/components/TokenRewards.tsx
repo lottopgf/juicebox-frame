@@ -19,6 +19,8 @@ export async function TokenRewards({
     cycleId,
   });
 
+  if (!cycleData) return <></>;
+
   const tokensPerEth = getTokensPerEth({
     reservedRate: cycleData.reservedRate,
     weight: cycleData.weight,
