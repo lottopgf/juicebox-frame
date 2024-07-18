@@ -74,7 +74,14 @@ export async function HomeImage(ctx: ImageContext) {
         >
           <div tw="-mt-[132px] flex h-[348px] w-[348px] rounded-3xl bg-black p-[6px] text-white">
             {logoURL ? (
-              <img src={logoURL} width={336} height={336} alt="" />
+              <img
+                src={logoURL}
+                width={336}
+                height={336}
+                alt=""
+                tw="rounded-2xl"
+                style={{ objectFit: "cover" }}
+              />
             ) : (
               <IconJuicebox tw="m-auto h-48 w-48 opacity-10" />
             )}

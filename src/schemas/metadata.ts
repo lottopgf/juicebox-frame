@@ -27,8 +27,8 @@ export const MetadataSchema = object({
   /** Introduced in V5 */
   nftPaymentSuccessModal: optional(
     object({
-      ctaText: string(),
-      ctaLink: string(),
+      ctaText: optional(string()),
+      ctaLink: optional(string()),
       content: string(),
     }),
   ),
