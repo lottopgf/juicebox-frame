@@ -2,8 +2,12 @@
 
 export function IconEthereum({ tw }: { tw?: string }) {
   return (
-    // @ts-ignore
-    <svg viewBox="0 0 20 20" fill="none" tw={tw}>
+    <svg
+      tw={tw}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 20 20"
+    >
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

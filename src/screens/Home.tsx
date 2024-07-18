@@ -6,8 +6,9 @@ import { Container } from "@/components/Container";
 import { TokenRewards } from "@/components/TokenRewards";
 import { IconArrow } from "@/graphics/IconArrow";
 import { IconEthereum } from "@/graphics/IconEthereum";
+import { IconJuicebox } from "@/graphics/IconJuicebox";
 import { LogoJuicebox } from "@/graphics/LogoJuicebox";
-import { formatEther, formatExcerpt, formatRichText } from "@/lib/format";
+import { formatEther, formatExcerpt } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTrendingPercentage } from "@/lib/juicebox";
 import { getProjectId } from "@/lib/parameters";
@@ -62,7 +63,7 @@ export async function HomeImage(ctx: ImageContext) {
         >
           <IconArrow tw="h-[60px] w-[60px]" />
           <span tw="ml-3 mr-6 text-[42px]">view on</span>
-          <LogoJuicebox tw="h-[50px] w-[220px]" />
+          <LogoJuicebox />
         </div>
         <div
           tw={twMerge(
@@ -71,18 +72,16 @@ export async function HomeImage(ctx: ImageContext) {
           )}
           style={{ gap: 24 }}
         >
-          {!!logoURL && (
-            <img
-              src={logoURL}
-              tw="-mt-[132px] h-[336px] w-[336px] rounded-3xl border-[6px] border-black bg-black"
-              alt=""
-            />
-          )}
-          <div
-            tw={twMerge(
-              "flex justify-end text-right",
-              !!logoURL && "absolute right-9 top-9",
+          <div tw="-mt-[132px] flex h-[348px] w-[348px] rounded-3xl bg-black p-[6px] text-white">
+            {logoURL ? (
+              <img src={logoURL} width={336} height={336} alt="" />
+            ) : (
+              <IconJuicebox tw="m-auto h-48 w-48 opacity-10" />
             )}
+          </div>
+
+          <div
+            tw={"absolute right-9 top-9 flex justify-end text-right"}
             style={{ fontFamily: "Agrandir", gap: 48 }}
           >
             <div tw="flex flex-col items-end">
