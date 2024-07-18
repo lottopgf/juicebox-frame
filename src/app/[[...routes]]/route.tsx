@@ -25,14 +25,14 @@ const app = new Frog({
         name: "Agrandir",
         weight: 500,
         data: readFileSync(
-          path.resolve(process.cwd(), "./fonts/PPAgrandir-Medium.ttf")
+          path.resolve(process.cwd(), "./fonts/PPAgrandir-Medium.ttf"),
         ),
       },
       {
         name: "Beatrice",
         weight: 400,
         data: readFileSync(
-          path.resolve(process.cwd(), "./fonts/Beatrice-Regular.ttf")
+          path.resolve(process.cwd(), "./fonts/Beatrice-Regular.ttf"),
         ),
       },
     ],

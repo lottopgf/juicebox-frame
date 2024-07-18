@@ -55,38 +55,38 @@ export async function HomeImage(ctx: ImageContext) {
       <Container tw="text-neutral-900">
         <div
           tw={twMerge(
-            "h-[132px] flex-shrink-0 flex justify-end items-center w-full px-9",
-            COLOR_BG_SPLIT
+            "flex h-[132px] w-full flex-shrink-0 items-center justify-end px-9",
+            COLOR_BG_SPLIT,
           )}
           style={{ fontFamily: "Agrandir" }}
         >
-          <IconArrow tw="w-[60px] h-[60px]" />
+          <IconArrow tw="h-[60px] w-[60px]" />
           <span tw="ml-3 mr-6 text-[42px]">view on</span>
-          <LogoJuicebox tw="w-[220px] h-[50px]" />
+          <LogoJuicebox tw="h-[50px] w-[220px]" />
         </div>
         <div
           tw={twMerge(
-            "relative flex-1 flex flex-col p-9",
-            COLOR_BG_SPLIT_LIGHT
+            "relative flex flex-1 flex-col p-9",
+            COLOR_BG_SPLIT_LIGHT,
           )}
           style={{ gap: 24 }}
         >
           {!!logoURL && (
             <img
               src={logoURL}
-              tw="w-[336px] h-[336px] -mt-[132px] border-black bg-black border-[6px] rounded-3xl"
+              tw="-mt-[132px] h-[336px] w-[336px] rounded-3xl border-[6px] border-black bg-black"
               alt=""
             />
           )}
           <div
             tw={twMerge(
-              "flex text-right justify-end",
-              !!logoURL && "absolute right-9 top-9"
+              "flex justify-end text-right",
+              !!logoURL && "absolute right-9 top-9",
             )}
             style={{ fontFamily: "Agrandir", gap: 48 }}
           >
             <div tw="flex flex-col items-end">
-              <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
+              <span tw={twMerge("text-4xl uppercase", COLOR_TEXT_SPLIT)}>
                 Payments
               </span>
               <span tw="text-[54px]">
@@ -95,7 +95,7 @@ export async function HomeImage(ctx: ImageContext) {
             </div>
             {trendingPercentage !== Infinity && (
               <div tw="flex flex-col items-end">
-                <span tw={twMerge("uppercase text-4xl", COLOR_TEXT_SPLIT)}>
+                <span tw={twMerge("text-4xl uppercase", COLOR_TEXT_SPLIT)}>
                   Last 7 days
                 </span>
                 <span tw="text-[54px]">
@@ -115,11 +115,11 @@ export async function HomeImage(ctx: ImageContext) {
           tw={twMerge(
             "flex items-center justify-center px-9 py-[27px] text-6xl",
             COLOR_BG_SPLIT,
-            COLOR_TEXT_SPLIT
+            COLOR_TEXT_SPLIT,
           )}
           style={{ gap: 12, fontFamily: "Agrandir" }}
         >
-          <IconEthereum tw="w-[60px] h-[60px]" />
+          <IconEthereum tw="h-[60px] w-[60px]" />
           <span>{formatEther(volume)} ETH raised</span>
         </div>
         <TokenRewards

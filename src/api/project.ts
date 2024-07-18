@@ -48,19 +48,19 @@ const ProjectSchema = object({
   paymentsCount: number(),
   volume: pipe(
     string(),
-    transform((input) => BigInt(String(input)))
+    transform((input) => BigInt(String(input))),
   ),
   volumeUSD: pipe(
     string(),
-    transform((input) => BigInt(String(input)))
+    transform((input) => BigInt(String(input))),
   ),
   trendingVolume: pipe(
     string(),
-    transform((input) => BigInt(String(input)))
+    transform((input) => BigInt(String(input))),
   ),
   currentBalance: pipe(
     string(),
-    transform((input) => BigInt(String(input)))
+    transform((input) => BigInt(String(input))),
   ),
   latestFundingCycle: number(),
   nftCollections: array(RewardSchema),

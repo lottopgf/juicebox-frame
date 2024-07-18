@@ -16,7 +16,7 @@ export async function ActivityImage(ctx: ImageContext) {
     image: (
       <Container>
         <Header project={data.metadata.name} page="Activity" />
-        <div tw="flex-1 px-8 py-6 bg-[#16141D] text-4xl leading-normal">
+        <div tw="flex-1 bg-[#16141D] px-8 py-6 text-4xl leading-normal">
           Volume chart here 📈
         </div>
       </Container>

@@ -17,8 +17,8 @@ export const MetadataSchema = object({
       object({
         value: string(),
         type: string(),
-      })
-    )
+      }),
+    ),
   ),
   /** Introduced in V3 */
   twitter: optional(string()),
@@ -30,7 +30,7 @@ export const MetadataSchema = object({
       ctaText: string(),
       ctaLink: string(),
       content: string(),
-    })
+    }),
   ),
   /** Introduced in V6 */
   telegram: optional(string()),

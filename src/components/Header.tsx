@@ -3,7 +3,7 @@
 export function Header({ project, page }: { project: string; page: string }) {
   return (
     <div
-      tw="flex-shrink-0 flex w-full px-8 py-2 text-6xl leading-normal"
+      tw="flex w-full flex-shrink-0 px-8 py-2 text-6xl leading-normal"
       style={{ fontFamily: "Agrandir" }}
     >
       <span

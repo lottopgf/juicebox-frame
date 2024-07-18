@@ -29,7 +29,7 @@ const CycleSchema = object({
   endTimestamp: nullable(number()),
   weight: pipe(
     string(),
-    transform((input) => BigInt(String(input)))
+    transform((input) => BigInt(String(input))),
   ),
   reservedRate: number(),
   useDataSourceForPay: boolean(),

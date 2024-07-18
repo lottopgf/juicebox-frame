@@ -13,8 +13,8 @@ export function Container({
   return (
     <div
       tw={twMerge(
-        "w-full h-full flex flex-col font-normal text-4xl text-white bg-[#201E29]",
-        tw
+        "flex h-full w-full flex-col bg-[#201E29] text-4xl font-normal text-white",
+        tw,
       )}
       style={{ fontFamily: "Beatrice" }}
     >

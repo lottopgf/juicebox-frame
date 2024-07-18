@@ -29,8 +29,8 @@ export async function TokenRewards({
   return (
     <div
       tw={twMerge(
-        "flex-shrink-0 flex justify-center w-full px-8 py-6 text-5xl text-center",
-        tw
+        "flex w-full flex-shrink-0 justify-center px-8 py-6 text-center text-5xl",
+        tw,
       )}
     >
       Receive {formatEther(tokensPerEth)} tokens per ETH paid

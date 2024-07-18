@@ -19,7 +19,7 @@ export async function AboutImage(ctx: ImageContext) {
         <Header project={data.metadata.name} page="About" />
 
         <div
-          tw="flex-1 px-8 py-6 bg-[#16141D] text-4xl leading-normal"
+          tw="flex-1 bg-[#16141D] px-8 py-6 text-4xl leading-normal"
           style={{ display: "block", lineClamp: 12 }}
         >
           {sanitize(data.metadata.description, {
