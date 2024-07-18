@@ -15,6 +15,7 @@ const app = new Frog({
   title: "Juicebox",
   assetsPath: "/",
   basePath: "/",
+  browserLocation: "https://juicebox.money/v2/p/:id",
   imageAspectRatio: "1:1",
   imageOptions: {
     debug: process.env.FRAME_DEBUG_MODE === "true",
