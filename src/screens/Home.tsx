@@ -3,6 +3,8 @@
 
 import { getProject } from "@/api/project";
 import { Container } from "@/components/Container";
+import { Content } from "@/components/Content";
+import { Header } from "@/components/Header";
 import { TokenRewards } from "@/components/TokenRewards";
 import { IconArrow } from "@/graphics/IconArrow";
 import { IconEthereum } from "@/graphics/IconEthereum";
@@ -53,26 +55,10 @@ export async function HomeImage(ctx: ImageContext) {
 
   return ctx.res({
     image: (
-      <Container tw="text-neutral-900">
-        <div
-          tw={twMerge(
-            "flex h-[132px] w-full flex-shrink-0 items-center justify-end px-9",
-            COLOR_BG_SPLIT,
-          )}
-          style={{ fontFamily: "Agrandir" }}
-        >
-          <IconArrow tw="h-[60px] w-[60px]" />
-          <span tw="ml-3 mr-6 text-[42px]">view on</span>
-          <LogoJuicebox />
-        </div>
-        <div
-          tw={twMerge(
-            "relative flex flex-1 flex-col p-9",
-            COLOR_BG_SPLIT_LIGHT,
-          )}
-          style={{ gap: 24 }}
-        >
-          <div tw="-mt-[132px] flex h-[348px] w-[348px] rounded-3xl bg-black p-[6px] text-white">
+      <Container tw={twMerge("text-neutral-900", COLOR_BG_SPLIT_LIGHT)}>
+        <Header tw={COLOR_BG_SPLIT} />
+        <Content style={{ gap: 24 }}>
+          <div tw="-ml-[6px] -mt-[94px] flex h-[348px] w-[348px] rounded-3xl bg-black p-[6px] text-white">
             {logoURL ? (
               <img
                 src={logoURL}
@@ -88,35 +74,38 @@ export async function HomeImage(ctx: ImageContext) {
           </div>
 
           <div
-            tw={"absolute right-9 top-9 flex justify-end text-right"}
+            tw={"absolute right-12 top-6 flex justify-end text-right"}
             style={{ fontFamily: "Agrandir", gap: 48 }}
           >
             <div tw="flex flex-col items-end">
-              <span tw={twMerge("text-4xl uppercase", COLOR_TEXT_SPLIT)}>
+              <span tw={twMerge("text-3xl uppercase", COLOR_TEXT_SPLIT)}>
                 Payments
               </span>
-              <span tw="text-[54px]">
+              <span tw="text-5xl leading-snug">
                 {paymentsCount.toLocaleString("en-US")}
               </span>
             </div>
             {trendingPercentage !== Infinity && (
               <div tw="flex flex-col items-end">
-                <span tw={twMerge("text-4xl uppercase", COLOR_TEXT_SPLIT)}>
+                <span tw={twMerge("text-3xl uppercase", COLOR_TEXT_SPLIT)}>
                   Last 7 days
                 </span>
-                <span tw="text-[54px]">
+                <span tw="text-5xl leading-snug">
                   +{trendingPercentage.toLocaleString("en-US")}%
                 </span>
               </div>
             )}
           </div>
 
-          <span tw="text-7xl font-medium" style={{ fontFamily: "Agrandir" }}>
+          <div
+            tw="text-7xl font-medium leading-none"
+            style={{ fontFamily: "Agrandir", display: "block", lineClamp: 2 }}
+          >
             {metadata.name}
-          </span>
+          </div>
 
-          <span tw="text-[42px] font-normal leading-[1.2]">{tagLine}</span>
-        </div>
+          <span>{tagLine}</span>
+        </Content>
         <div
           tw={twMerge(
             "flex items-center justify-center px-9 py-[27px] text-6xl",

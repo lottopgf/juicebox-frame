@@ -1,22 +1,19 @@
 /** @jsxImportSource frog/jsx */
 
-export function Header({ project, page }: { project: string; page: string }) {
+import { ViewOnJuicebox } from "@/components/ViewOnJuicebox";
+import { twMerge } from "tailwind-merge";
+
+export function Header({ page, tw }: { page?: string; tw?: string }) {
   return (
     <div
-      tw="flex w-full flex-shrink-0 px-8 py-2 text-6xl leading-normal"
-      style={{ fontFamily: "Agrandir" }}
+      tw={twMerge(
+        `flex h-[100px] w-full items-center justify-between px-12`,
+        tw,
+      )}
+      style={{ fontFamily: "Agrandir", gap: 16 }}
     >
-      <span
-        style={{
-          whiteSpace: "nowrap",
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-        }}
-      >
-        {project}
-      </span>
-      <span tw="mx-4">&rsaquo;</span>
-      <span tw="flex-shrink-0">{page}</span>
+      <span tw="flex-shrink-0 text-5xl leading-normal">{page}</span>
+      <ViewOnJuicebox />
     </div>
   );
 }

@@ -4,9 +4,11 @@
 import { getProject } from "@/api/project";
 import { BackButton } from "@/components/BackButton";
 import { Container } from "@/components/Container";
+import { Content } from "@/components/Content";
 import { Header } from "@/components/Header";
 import { formatRichText } from "@/lib/format";
 import { getProjectId } from "@/lib/parameters";
+import { COLOR_BG_BLUEBS_200, COLOR_BG_BLUEBS_500 } from "@/styles/colors";
 import { Button, FrameContext, type ImageContext } from "frog";
 
 export async function AboutImage(ctx: ImageContext) {
@@ -15,15 +17,21 @@ export async function AboutImage(ctx: ImageContext) {
 
   return ctx.res({
     image: (
-      <Container>
-        <Header project={data.metadata.name} page="About" />
+      <Container tw={COLOR_BG_BLUEBS_200}>
+        <Header page="About" tw={COLOR_BG_BLUEBS_500} />
 
-        <div
-          tw="flex-1 bg-[#16141D] px-8 py-6 text-4xl leading-normal"
-          style={{ display: "block", lineClamp: 12 }}
-        >
-          {formatRichText(data.metadata.description)}
-        </div>
+        <Content>
+          <div
+            tw="mb-9 text-7xl font-medium leading-none"
+            style={{ fontFamily: "Agrandir", display: "block", lineClamp: 2 }}
+          >
+            {data.metadata.name}
+          </div>
+
+          <div style={{ display: "block", lineClamp: 10 }}>
+            {formatRichText(data.metadata.description)}
+          </div>
+        </Content>
       </Container>
     ),
   });
