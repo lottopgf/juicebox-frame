@@ -1,9 +1,9 @@
 /** @jsxImportSource frog/jsx */
 
 import { getCycle } from "@/api/cycle";
+import { formatEther } from "@/lib/format";
 import { getTokensPerEth } from "@/lib/juicebox";
 import { twMerge } from "tailwind-merge";
-import { formatEther } from "viem";
 
 export async function TokenRewards({
   projectId,
