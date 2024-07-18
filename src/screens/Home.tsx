@@ -7,7 +7,7 @@ import { TokenRewards } from "@/components/TokenRewards";
 import { IconArrow } from "@/graphics/IconArrow";
 import { IconEthereum } from "@/graphics/IconEthereum";
 import { LogoJuicebox } from "@/graphics/LogoJuicebox";
-import { formatEther } from "@/lib/format";
+import { formatEther, formatExcerpt, formatRichText } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTrendingPercentage } from "@/lib/juicebox";
 import { getProjectId } from "@/lib/parameters";
@@ -46,6 +46,9 @@ export async function HomeImage(ctx: ImageContext) {
   });
 
   const logoURL = ipfsURL(cidFromURL(projectData.metadata.logoUri));
+
+  const tagLine =
+    metadata.projectTagline ?? formatExcerpt(metadata.description);
 
   return ctx.res({
     image: (
@@ -106,9 +109,7 @@ export async function HomeImage(ctx: ImageContext) {
             {metadata.name}
           </span>
 
-          <span tw="text-[42px] font-normal leading-[1.2]">
-            {metadata.projectTagline}
-          </span>
+          <span tw="text-[42px] font-normal leading-[1.2]">{tagLine}</span>
         </div>
         <div
           tw={twMerge(
