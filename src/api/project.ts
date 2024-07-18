@@ -4,11 +4,12 @@ import { METADATA_V10_SCHEMA } from "@/schemas/metadataV10";
 import { gql } from "graphql-request";
 import {
   array,
+  flatten,
   nullable,
   number,
   object,
-  parse,
   pipe,
+  safeParse,
   string,
   transform,
 } from "valibot";
@@ -77,7 +78,14 @@ export async function getProject({
     ProjectId: projectId,
   });
 
-  const projectData = parse(ProjectSchema, data.projects.at(0));
+  const projectResult = safeParse(ProjectSchema, data.projects.at(0));
+
+  if (!projectResult.success) {
+    console.error(flatten(projectResult.issues));
+    throw new Error("Failed to parse project data");
+  }
+
+  const projectData = projectResult.output;
 
   const url = ipfsURL(cidFromURL(projectData.metadataUri));
 
@@ -85,9 +93,14 @@ export async function getProject({
     throw new Error("Invalid metadata URI");
   }
 
-  const projectMetadata = await fetch(url)
+  const metadataResult = await fetch(url)
     .then((res) => res.json())
-    .then((data) => parse(METADATA_V10_SCHEMA, data));
+    .then((data) => safeParse(METADATA_V10_SCHEMA, data));
 
-  return { ...projectData, metadata: projectMetadata };
+  if (!metadataResult.success) {
+    console.error(flatten(metadataResult.issues));
+    throw new Error("Failed to parse project data");
+  }
+
+  return { ...projectData, metadata: metadataResult.output };
 }

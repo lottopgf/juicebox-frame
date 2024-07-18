@@ -2,11 +2,12 @@ import { graphClient } from "@/lib/graph";
 import { gql } from "graphql-request";
 import {
   boolean,
+  flatten,
   nullable,
   number,
   object,
-  parse,
   pipe,
+  safeParse,
   string,
   transform,
 } from "valibot";
@@ -47,5 +48,12 @@ export async function getCycle({
     Cycle: `${projectVersion}-${projectId}-${cycleId}`,
   });
 
-  return parse(CycleSchema, data.fundingCycles.at(0));
+  const result = safeParse(CycleSchema, data.fundingCycles.at(0));
+
+  if (!result.success) {
+    console.error(flatten(result.issues));
+    throw new Error("Failed to parse cycle data");
+  }
+
+  return result.output;
 }
