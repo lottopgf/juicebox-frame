@@ -108,13 +108,13 @@ export async function HomeImage(ctx: ImageContext) {
         </Content>
         <div
           tw={twMerge(
-            "flex items-center justify-center px-9 py-[27px] text-6xl",
+            "flex h-[115px] items-center justify-center px-12 text-[56px] leading-none",
             COLOR_BG_SPLIT,
             COLOR_TEXT_SPLIT,
           )}
-          style={{ gap: 12, fontFamily: "Agrandir" }}
+          style={{ gap: 8, fontFamily: "Agrandir" }}
         >
-          <IconEthereum tw="h-[60px] w-[60px]" />
+          <IconEthereum tw="h-[56px] w-[56px]" />
           <span>{formatEther(volume)} ETH raised</span>
         </div>
         <TokenRewards

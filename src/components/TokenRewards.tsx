@@ -31,7 +31,7 @@ export async function TokenRewards({
   return (
     <div
       tw={twMerge(
-        "flex w-full flex-shrink-0 justify-center px-8 py-6 text-center text-5xl",
+        "flex h-[115px] w-full flex-shrink-0 items-center justify-center px-12 text-center text-[44px] leading-none",
         tw,
       )}
     >
