@@ -63,17 +63,23 @@ export async function HomeImage(ctx: ImageContext) {
         </div>
         <div
           tw={twMerge(
-            "relative flex-1 flex flex-col px-9",
+            "relative flex-1 flex flex-col p-9",
             COLOR_BG_SPLIT_LIGHT
           )}
+          style={{ gap: 24 }}
         >
-          <img
-            src={logoURL}
-            tw="w-[336px] h-[336px] -mt-[96px] mb-9 border-black bg-black border-[6px] rounded-3xl"
-            alt=""
-          />
+          {!!logoURL && (
+            <img
+              src={logoURL}
+              tw="w-[336px] h-[336px] -mt-[132px] border-black bg-black border-[6px] rounded-3xl"
+              alt=""
+            />
+          )}
           <div
-            tw="absolute right-9 top-9 flex text-right"
+            tw={twMerge(
+              "flex text-right justify-end",
+              !!logoURL && "absolute right-9 top-9"
+            )}
             style={{ fontFamily: "Agrandir", gap: 48 }}
           >
             <div tw="flex flex-col items-end">
@@ -96,10 +102,7 @@ export async function HomeImage(ctx: ImageContext) {
             )}
           </div>
 
-          <span
-            tw="mb-6 text-7xl font-medium"
-            style={{ fontFamily: "Agrandir" }}
-          >
+          <span tw="text-7xl font-medium" style={{ fontFamily: "Agrandir" }}>
             {metadata.name}
           </span>
 
