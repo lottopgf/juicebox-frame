@@ -48,10 +48,17 @@ export async function getCycle({
     Cycle: `${projectVersion}-${projectId}-${cycleId}`,
   });
 
-  const result = safeParse(CycleSchema, data.fundingCycles.at(0));
+  const rawCycleData = data.fundingCycles.at(0);
+
+  if (!rawCycleData) {
+    throw new Error("Cycle not found");
+  }
+
+  const result = safeParse(CycleSchema, rawCycleData);
 
   if (!result.success) {
-    console.error(flatten(result.issues));
+    console.error(`Cycle parse error: %O`, flatten(result.issues));
+    console.log("Raw data:", rawCycleData);
     throw new Error("Failed to parse cycle data");
   }
 

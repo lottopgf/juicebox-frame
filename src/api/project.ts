@@ -1,6 +1,6 @@
 import { graphClient } from "@/lib/graph";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
-import { METADATA_V10_SCHEMA } from "@/schemas/metadataV10";
+import { MetadataSchema } from "@/schemas/metadata";
 import { gql } from "graphql-request";
 import {
   array,
@@ -78,10 +78,17 @@ export async function getProject({
     ProjectId: projectId,
   });
 
-  const projectResult = safeParse(ProjectSchema, data.projects.at(0));
+  const rawProjectData = data.projects.at(0);
+
+  if (!rawProjectData) {
+    throw new Error("Project not found");
+  }
+
+  const projectResult = safeParse(ProjectSchema, rawProjectData);
 
   if (!projectResult.success) {
-    console.error(flatten(projectResult.issues));
+    console.error(`Project parse error: %O`, flatten(projectResult.issues));
+    console.log("Raw data:", rawProjectData);
     throw new Error("Failed to parse project data");
   }
 
@@ -93,12 +100,13 @@ export async function getProject({
     throw new Error("Invalid metadata URI");
   }
 
-  const metadataResult = await fetch(url)
-    .then((res) => res.json())
-    .then((data) => safeParse(METADATA_V10_SCHEMA, data));
+  const rawMetadata = await fetch(url).then((res) => res.json());
+
+  const metadataResult = safeParse(MetadataSchema, rawMetadata);
 
   if (!metadataResult.success) {
-    console.error(flatten(metadataResult.issues));
+    console.error(`Metadata parse error: %O`, flatten(metadataResult.issues));
+    console.log("Raw data:", rawMetadata);
     throw new Error("Failed to parse project data");
   }
 
