@@ -15,9 +15,11 @@ export function formatRichText(text: string) {
 }
 
 export function formatExcerpt(text: string) {
-  if (text.length > 95) {
-    return `${text.slice(0, 95)}…`;
+  const plainText = formatRichText(text);
+
+  if (plainText.length > 95) {
+    return `${plainText.slice(0, 95)}…`;
   }
 
-  return text;
+  return plainText;
 }
