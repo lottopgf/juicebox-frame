@@ -15,7 +15,7 @@ export function formatRichText(text: string) {
 }
 
 export function formatExcerpt(text: string) {
-  const plainText = formatRichText(text);
+  const plainText = formatRichText(text).trim();
 
   if (plainText.length > 95) {
     return `${plainText.slice(0, 95)}…`;
