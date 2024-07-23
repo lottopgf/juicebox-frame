@@ -1,9 +1,13 @@
 import sanitize from "sanitize-html";
 import { formatEther as rawFormatEther } from "viem";
 
+export function parseEther(amount: bigint) {
+  return Number(rawFormatEther(amount));
+}
+
 export function formatEther(amount: bigint) {
   return Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
-    Number(rawFormatEther(amount)),
+    parseEther(amount),
   );
 }
 
