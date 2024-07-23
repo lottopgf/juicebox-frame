@@ -36,8 +36,6 @@ export async function ActivityImage(ctx: ImageContext) {
     library: honoJSX,
   });
 
-  console.log(chart);
-
   return ctx.res({
     image: (
       <Container tw={COLOR_BG_MELON_200}>
