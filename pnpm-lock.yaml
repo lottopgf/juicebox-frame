@@ -18,8 +18,8 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       frog:
-        specifier: ^0.15.1
-        version: 0.15.1(@types/node@20.14.12)(hono@4.5.1)(typescript@5.5.4)(zod@3.23.8)
+        specifier: ^0.15.2
+        version: 0.15.2(@types/node@20.14.12)(hono@4.5.1)(typescript@5.5.4)(zod@3.23.8)
       graphql:
         specifier: ^16.9.0
         version: 16.9.0
@@ -57,8 +57,8 @@ importers:
         specifier: ^0.36.0
         version: 0.36.0
       viem:
-        specifier: ^2.17.10
-        version: 2.17.10(typescript@5.5.4)(zod@3.23.8)
+        specifier: ^2.18.0
+        version: 2.18.0(typescript@5.5.4)(zod@3.23.8)
     devDependencies:
       '@types/d3':
         specifier: ^7.4.3
@@ -1741,8 +1741,8 @@ packages:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
 
-  frog@0.15.1:
-    resolution: {integrity: sha512-EU9xvjwwrKcJ+HxI9ZL/vC6mDqLD8EUdxJhvYklDpl+HkAXFBtLSbf+Tjfzi2sLmaYw/d5xjte8t0bf+98tOfw==}
+  frog@0.15.2:
+    resolution: {integrity: sha512-YbDUQWpsigMv/Uwmkk2xLW/tKaC/UaGmdAUEs2WpYSfhHxTvp3U7Kktk+7Dn2UVzevvhAMB9uGy/r4GGZjF9DQ==}
     hasBin: true
     peerDependencies:
       hono: ^4.4.4
@@ -2579,8 +2579,8 @@ packages:
     resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.4.39:
-    resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
+  postcss@8.4.40:
+    resolution: {integrity: sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -3160,8 +3160,8 @@ packages:
     engines: {node: '>= 16'}
     hasBin: true
 
-  viem@2.17.10:
-    resolution: {integrity: sha512-nubTeRBI3wsmYGemlg9PsbhunTSJSYUlq8VjzIQkbowCSPSd1bqzVeUU0qEOXsGtgRiFfBzXkkxFknZtBOAx/Q==}
+  viem@2.18.0:
+    resolution: {integrity: sha512-HA4Dj+PCNWvvZDThWcUPg0sjiS8uwGRaxs3CMBOASL/j0p2pD4nR9vY/y/pAiRr491hGCnrSCVCmb/qqA57wIw==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -3202,6 +3202,9 @@ packages:
 
   web-vitals@0.2.4:
     resolution: {integrity: sha512-6BjspCO9VriYy12z356nL6JBS0GYeEcA457YyRzD+dD6XYCQ75NKhcOHUMHentOE7OcVCIXXDvOm0jKFfQG2Gg==}
+
+  webauthn-p256@0.0.5:
+    resolution: {integrity: sha512-drMGNWKdaixZNobeORVIqq7k5DsRC9FnG201K2QjeOoQLmtSDaSsVZdkg6n5jUALJKcAG++zBPJXmv6hy0nWFg==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -5176,7 +5179,7 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  frog@0.15.1(@types/node@20.14.12)(hono@4.5.1)(typescript@5.5.4)(zod@3.23.8):
+  frog@0.15.2(@types/node@20.14.12)(hono@4.5.1)(typescript@5.5.4)(zod@3.23.8):
     dependencies:
       '@bufbuild/protobuf': 1.10.0
       '@hono/node-server': 1.12.0
@@ -5195,7 +5198,7 @@ snapshots:
       lz-string: 1.5.0
       path-browserify: 1.0.1
       valibot: 0.31.1
-      viem: 2.17.10(typescript@5.5.4)(zod@3.23.8)
+      viem: 2.18.0(typescript@5.5.4)(zod@3.23.8)
       vite: 5.3.4(@types/node@20.14.12)
     optionalDependencies:
       typescript: 5.5.4
@@ -6038,7 +6041,7 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
-  postcss@8.4.39:
+  postcss@8.4.40:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.0.1
@@ -6642,7 +6645,7 @@ snapshots:
       - encoding
       - supports-color
 
-  viem@2.17.10(typescript@5.5.4)(zod@3.23.8):
+  viem@2.18.0(typescript@5.5.4)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.4.0
@@ -6651,6 +6654,7 @@ snapshots:
       '@scure/bip39': 1.3.0
       abitype: 1.0.5(typescript@5.5.4)(zod@3.23.8)
       isows: 1.0.4(ws@8.17.1)
+      webauthn-p256: 0.0.5
       ws: 8.17.1
     optionalDependencies:
       typescript: 5.5.4
@@ -6662,7 +6666,7 @@ snapshots:
   vite@5.3.4(@types/node@20.14.12):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.39
+      postcss: 8.4.40
       rollup: 4.19.0
     optionalDependencies:
       '@types/node': 20.14.12
@@ -6673,6 +6677,11 @@ snapshots:
       xml-name-validator: 5.0.0
 
   web-vitals@0.2.4: {}
+
+  webauthn-p256@0.0.5:
+    dependencies:
+      '@noble/curves': 1.4.0
+      '@noble/hashes': 1.4.0
 
   webidl-conversions@3.0.1: {}
 
