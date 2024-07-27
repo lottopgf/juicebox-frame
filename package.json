@@ -14,10 +14,10 @@
     "@landas/ethereum-block-by-date": "^1.5.1",
     "d3": "^7.9.0",
     "date-fns": "^3.6.0",
-    "frog": "^0.15.2",
+    "frog": "^0.15.7",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
-    "hono": "^4.5.1",
+    "hono": "^4.5.2",
     "html-react-parser": "^5.1.12",
     "jsdom": "^24.1.1",
     "next": "^14.2.5",
@@ -27,7 +27,7 @@
     "satori-html": "^0.3.2",
     "tailwind-merge": "^2.4.0",
     "valibot": "^0.36.0",
-    "viem": "^2.18.0"
+    "viem": "^2.18.2"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
@@ -41,7 +41,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "typescript": "^5.5.4",
-    "vercel": "^35.1.0"
+    "vercel": "^35.2.1"
   },
   "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
 }
