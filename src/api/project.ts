@@ -1,3 +1,4 @@
+import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { MetadataSchema } from "@/schemas/metadata";
@@ -80,13 +81,13 @@ const cachedRequest = unstable_cache(
     });
   },
   ["project"],
-  { revalidate: 3600 },
+  { revalidate: CACHE_TIME },
 );
 
 const cachedMetadataRequest = unstable_cache(
   (url: string) => fetch(url).then((res) => res.json()),
   ["projectMetadata"],
-  { revalidate: 3600 },
+  { revalidate: CACHE_TIME },
 );
 
 export async function getProject(params: GetProjectParams) {

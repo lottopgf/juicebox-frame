@@ -5,9 +5,11 @@ import { getProject } from "@/api/project";
 import { Container } from "@/components/Container";
 import { Content } from "@/components/Content";
 import { Header } from "@/components/Header";
+import { Title } from "@/components/Title";
 import { TokenRewards } from "@/components/TokenRewards";
 import { IconEthereum } from "@/graphics/IconEthereum";
 import { IconJuicebox } from "@/graphics/IconJuicebox";
+import { CACHE_TIME } from "@/lib/config";
 import { formatEther, formatExcerpt } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTrendingPercentage } from "@/lib/juicebox";
@@ -52,6 +54,9 @@ export async function HomeImage(ctx: ImageContext) {
     metadata.projectTagline ?? formatExcerpt(metadata.description);
 
   return ctx.res({
+    headers: {
+      "Cache-Control": `public, max-age=${CACHE_TIME}`,
+    },
     image: (
       <Container tw={twMerge("text-neutral-900", COLOR_BG_SPLIT_LIGHT)}>
         <Header tw={COLOR_BG_SPLIT} />
@@ -95,12 +100,7 @@ export async function HomeImage(ctx: ImageContext) {
             )}
           </div>
 
-          <div
-            tw="text-7xl font-medium leading-none"
-            style={{ fontFamily: "Agrandir", display: "block", lineClamp: 2 }}
-          >
-            {metadata.name}
-          </div>
+          <Title tw="mb-0">{metadata.name}</Title>
 
           <span>{tagLine}</span>
         </Content>

@@ -8,6 +8,8 @@ import { renderChart } from "@/components/Chart";
 import { Container } from "@/components/Container";
 import { Content } from "@/components/Content";
 import { Header } from "@/components/Header";
+import { Title } from "@/components/Title";
+import { CACHE_TIME } from "@/lib/config";
 import { getProjectId } from "@/lib/parameters";
 import { COLOR_BG_MELON_200, COLOR_BG_MELON_500 } from "@/styles/colors";
 import { Button, FrameContext, type ImageContext } from "frog";
@@ -33,19 +35,17 @@ export async function ActivityImage(ctx: ImageContext) {
   });
 
   return ctx.res({
+    headers: {
+      "Cache-Control": `public, max-age=${CACHE_TIME}`,
+    },
     image: (
       <Container tw={COLOR_BG_MELON_200}>
         <Header
           tw={twMerge("text-black", COLOR_BG_MELON_500)}
           page="Activity"
         />
-        <Content>
-          <div
-            tw="mb-9 text-7xl font-medium leading-none"
-            style={{ fontFamily: "Agrandir", display: "block", lineClamp: 2 }}
-          >
-            {data.metadata.name}
-          </div>
+        <Content tw="justify-between gap-9">
+          <Title>{data.metadata.name}</Title>
           <div tw="flex items-center justify-center">{chartElem}</div>
         </Content>
       </Container>

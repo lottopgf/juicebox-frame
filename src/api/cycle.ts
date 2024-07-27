@@ -1,3 +1,4 @@
+import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
 import { gql } from "graphql-request";
 import { unstable_cache } from "next/cache";
@@ -49,7 +50,7 @@ const cachedRequest = unstable_cache(
     });
   },
   ["cycle"],
-  { revalidate: 3600 },
+  { revalidate: CACHE_TIME },
 );
 
 export async function getCycle(params: GetCycleParams) {

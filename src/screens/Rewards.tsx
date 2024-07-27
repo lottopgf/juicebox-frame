@@ -6,6 +6,8 @@ import { BackButton } from "@/components/BackButton";
 import { Container } from "@/components/Container";
 import { Content } from "@/components/Content";
 import { Header } from "@/components/Header";
+import { Title } from "@/components/Title";
+import { CACHE_TIME } from "@/lib/config";
 import { getProjectId } from "@/lib/parameters";
 import { COLOR_BG_PEEL_200, COLOR_BG_PEEL_500 } from "@/styles/colors";
 import { Button, FrameContext, type ImageContext } from "frog";
@@ -15,17 +17,15 @@ export async function RewardsImage(ctx: ImageContext) {
   const data = await getProject({ projectId });
 
   return ctx.res({
+    headers: {
+      "Cache-Control": `public, max-age=${CACHE_TIME}`,
+    },
     image: (
       <Container tw={COLOR_BG_PEEL_500}>
         <Header page="About" tw={COLOR_BG_PEEL_200} />
 
         <Content>
-          <div
-            tw="mb-9 text-7xl font-medium leading-none"
-            style={{ fontFamily: "Agrandir", display: "block", lineClamp: 2 }}
-          >
-            {data.metadata.name}
-          </div>
+          <Title>{data.metadata.name}</Title>
 
           <div style={{ display: "block", lineClamp: 10 }}>
             Reward information here 🎁
