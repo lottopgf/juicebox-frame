@@ -13,17 +13,24 @@ interface DataPoint {
 }
 
 export async function renderChart(data: DataPoint[]) {
-  const width = 920;
-  const height = 750;
-  const margin = 50;
+  const width = 880;
+  const height = 640;
+
+  const marginLeft = 75;
+  const marginRight = 25;
+  const marginTop = 25;
+  const marginBottom = 50;
 
   const svg = d3
     .create("svg")
-    .attr("viewBox", `0 0 ${width + margin * 1.5} ${height + margin * 1.5}`);
+    .attr(
+      "viewBox",
+      `0 0 ${width + marginLeft + marginRight} ${height + marginTop + marginBottom}`,
+    );
 
   const wrapper = svg
     .append("g")
-    .attr("transform", `translate(${margin},${margin})`);
+    .attr("transform", `translate(${marginLeft},${marginTop})`);
 
   const x = d3
     .scaleUtc()
@@ -50,14 +57,16 @@ export async function renderChart(data: DataPoint[]) {
       tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
     const text = textNode.text();
 
-    const x = parseFloat(rawX) + margin;
-    const y = parseFloat(rawY) + margin + height;
+    const x = parseFloat(rawX) + marginLeft;
+    const y = parseFloat(rawY) + marginTop + height;
+
+    const labelWidth = 75;
 
     tick
       .append("div")
       .attr(
         "tw",
-        `absolute flex justify-center text-2xl text-center w-[100px] -ml-[50px] mt-[5px] top-[${y}px] left-[${x}px]`,
+        `absolute flex justify-center text-2xl text-center w-[${labelWidth}px] -ml-[${labelWidth / 2}px] mt-[5px] top-[${y}px] left-[${x}px]`,
       )
       .text(text);
     textNode.remove();
@@ -90,13 +99,13 @@ export async function renderChart(data: DataPoint[]) {
     const text = textNode.text();
 
     const x = 0;
-    const y = parseFloat(rawY) + margin;
+    const y = parseFloat(rawY) + marginTop;
 
     tick
       .append("div")
       .attr(
         "tw",
-        `absolute flex justify-end text-2xl text-right w-[50px] -ml-[${margin / 3}px] -mt-[22px] top-[${y}px] left-[${x}px]`,
+        `absolute flex justify-end text-2xl text-right w-[50px] -mt-[22px] top-[${y}px] left-[${x}px]`,
       )
       .text(text);
     textNode.remove();
