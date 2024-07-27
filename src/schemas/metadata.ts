@@ -1,4 +1,4 @@
-import { any, array, object, optional, string } from "valibot";
+import { array, object, optional, string } from "valibot";
 
 /**
  * Compatible metadata schema.

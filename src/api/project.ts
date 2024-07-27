@@ -2,6 +2,7 @@ import { graphClient } from "@/lib/graph";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { MetadataSchema } from "@/schemas/metadata";
 import { gql } from "graphql-request";
+import { unstable_cache } from "next/cache";
 import {
   array,
   flatten,
@@ -66,17 +67,30 @@ const ProjectSchema = object({
   nftCollections: array(RewardSchema),
 });
 
-export async function getProject({
-  projectVersion = "2",
-  projectId,
-}: {
+interface GetProjectParams {
   projectVersion?: string;
   projectId: number;
-}) {
-  const data: any = await graphClient.request(projectQuery, {
-    PV: projectVersion,
-    ProjectId: projectId,
-  });
+}
+
+const cachedRequest = unstable_cache(
+  ({ projectVersion = "2", projectId }: GetProjectParams) => {
+    return graphClient.request(projectQuery, {
+      PV: projectVersion,
+      ProjectId: projectId,
+    });
+  },
+  ["project"],
+  { revalidate: 3600 },
+);
+
+const cachedMetadataRequest = unstable_cache(
+  (url: string) => fetch(url).then((res) => res.json()),
+  ["projectMetadata"],
+  { revalidate: 3600 },
+);
+
+export async function getProject(params: GetProjectParams) {
+  const data = await cachedRequest(params);
 
   const rawProjectData = data.projects.at(0);
 
@@ -100,7 +114,7 @@ export async function getProject({
     throw new Error("Invalid metadata URI");
   }
 
-  const rawMetadata = await fetch(url).then((res) => res.json());
+  const rawMetadata = await cachedMetadataRequest(url);
 
   const metadataResult = safeParse(MetadataSchema, rawMetadata);
 

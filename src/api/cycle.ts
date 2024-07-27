@@ -1,5 +1,6 @@
 import { graphClient } from "@/lib/graph";
 import { gql } from "graphql-request";
+import { unstable_cache } from "next/cache";
 import {
   boolean,
   flatten,
@@ -35,18 +36,24 @@ const CycleSchema = object({
   useDataSourceForPay: boolean(),
 });
 
-export async function getCycle({
-  projectVersion = "2",
-  projectId,
-  cycleId,
-}: {
+interface GetCycleParams {
   projectVersion?: string;
   projectId: number;
   cycleId: number;
-}) {
-  const data: any = await graphClient.request(cycleQuery, {
-    Cycle: `${projectVersion}-${projectId}-${cycleId}`,
-  });
+}
+
+const cachedRequest = unstable_cache(
+  ({ projectVersion = "2", projectId, cycleId }: GetCycleParams) => {
+    return graphClient.request(cycleQuery, {
+      Cycle: `${projectVersion}-${projectId}-${cycleId}`,
+    });
+  },
+  ["cycle"],
+  { revalidate: 3600 },
+);
+
+export async function getCycle(params: GetCycleParams) {
+  const data = await cachedRequest(params);
 
   const rawCycleData = data.fundingCycles.at(0);
 
