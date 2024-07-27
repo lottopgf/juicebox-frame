@@ -11,20 +11,15 @@ import { Header } from "@/components/Header";
 import { getProjectId } from "@/lib/parameters";
 import { COLOR_BG_MELON_200, COLOR_BG_MELON_500 } from "@/styles/colors";
 import { Button, FrameContext, type ImageContext } from "frog";
+import honoJSX from "hono/jsx";
 import parse from "html-react-parser";
 import { twMerge } from "tailwind-merge";
-
-const honoJSX = require("hono/jsx");
 
 export async function ActivityImage(ctx: ImageContext) {
   const projectId = getProjectId(ctx);
   const data = await getProject({ projectId });
-
   const timelineBlocks = await getTimelineBlocks();
-  const points = await getTimeline({
-    projectId,
-    timelineBlocks,
-  });
+  const points = await getTimeline({ projectId, timelineBlocks });
 
   const chart = await renderChart(
     points.map((point) => ({
@@ -33,6 +28,7 @@ export async function ActivityImage(ctx: ImageContext) {
     })),
   );
   const chartElem = parse(chart ?? "", {
+    // @ts-ignore Confirmed it working, but typescript is just not happy :^)
     library: honoJSX,
   });
 

@@ -12,7 +12,7 @@ export function Header({ page, tw }: { page?: string; tw?: string }) {
       )}
       style={{ fontFamily: "Agrandir", gap: 16 }}
     >
-      <span tw="flex-shrink-0 text-5xl leading-normal">{page}</span>
+      <span tw="flex-shrink-0 text-[42px] leading-normal">{page}</span>
       <ViewOnJuicebox />
     </div>
   );
