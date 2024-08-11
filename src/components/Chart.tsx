@@ -44,7 +44,7 @@ export async function renderChart(data: DataPoint[]) {
     .call(
       d3
         .axisBottom<Date>(x)
-        .tickValues(x.ticks(7).concat(x.domain().slice(-1)))
+        .tickValues(x.ticks(7))
         .tickFormat(d3.utcFormat("%-m/%-d"))
         .tickSizeOuter(0),
     );
