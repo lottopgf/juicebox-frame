@@ -44,7 +44,7 @@ export async function ActivityImage(ctx: ImageContext) {
           tw={twMerge("text-black", COLOR_BG_MELON_500)}
           page="Activity"
         />
-        <Content tw="justify-between gap-9">
+        <Content tw="justify-between">
           <Title>{data.metadata.name}</Title>
           <div tw="flex items-center justify-center">{chartElem}</div>
         </Content>
