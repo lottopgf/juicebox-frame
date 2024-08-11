@@ -1,6 +1,6 @@
 import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
-import { cidFromURL, ipfsURL } from "@/lib/ipfs";
+import { cidFromURL, decodeEncodedIPFSUri, ipfsURL } from "@/lib/ipfs";
 import { MetadataSchema } from "@/schemas/metadata";
 import { gql } from "graphql-request";
 import { unstable_cache } from "next/cache";
@@ -32,15 +32,37 @@ const projectQuery = gql`
         address # the NFT contract's address
         name # the collection's name
         symbol # the collection's ticker
+        tiers {
+          price # the ETH price of the NFT (18 decimals)
+          remainingQuantity # how many are remaining
+          initialQuantity # the initial quantity
+          encodedIpfsUri # hex-encoded ipfs URI
+          resolvedUri # metadata resolver URI, if one exists
+        }
       }
     }
   }
 `;
 
+const RewardTierSchema = object({
+  price: pipe(
+    string(),
+    transform((input) => BigInt(String(input))),
+  ),
+  remainingQuantity: pipe(string(), transform(Number), number()),
+  initialQuantity: pipe(string(), transform(Number), number()),
+  encodedIpfsUri: pipe(
+    string(),
+    transform((input) => decodeEncodedIPFSUri(input)),
+  ),
+  resolvedUri: nullable(string()),
+});
+
 const RewardSchema = object({
   address: string(),
   name: string(),
   symbol: string(),
+  tiers: nullable(array(RewardTierSchema)),
 });
 
 const ProjectSchema = object({
