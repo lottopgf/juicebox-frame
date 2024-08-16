@@ -50,7 +50,8 @@ app.frame("/:id/activity", ActivityScreen);
 app.image("/:id/images/activity", ActivityImage);
 
 app.frame("/:id/rewards", RewardsScreen);
-app.image("/:id/images/rewards", RewardsImage);
+app.frame("/:id/rewards/:rewardId", RewardsScreen);
+app.image("/:id/images/rewards/:rewardId", RewardsImage);
 
 devtools(app, { serveStatic });
 

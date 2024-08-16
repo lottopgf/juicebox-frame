@@ -12,3 +12,4 @@ export const COLOR_BG_MELON_200 = "bg-[#C6EDD5]";
 
 export const COLOR_BG_PEEL_500 = "bg-[#F7BCA1]";
 export const COLOR_BG_PEEL_200 = "bg-[#E0561B]";
+export const COLOR_TEXT_PEEL_400 = "text-[#EE6F3A]";
