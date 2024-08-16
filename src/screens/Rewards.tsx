@@ -1,5 +1,5 @@
 /** @jsxImportSource frog/jsx */
-/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-key, @next/next/no-img-element */
 
 import { getProject } from "@/api/project";
 import { resolveRewards } from "@/api/rewards";
