@@ -5,9 +5,12 @@ import EthDater from "@landas/ethereum-block-by-date";
 import { subDays, subMinutes } from "date-fns";
 import { gql } from "graphql-request";
 import { unstable_cache } from "next/cache";
-import { createPublicClient, http } from "viem";
+import { createPublicClient, fallback, http } from "viem";
 
-const client = createPublicClient({ chain: CHAIN, transport: http() });
+const client = createPublicClient({
+  chain: CHAIN,
+  transport: fallback([http(process.env.RPC_URL), http()]),
+});
 
 interface EthBlock {
   date: string;
