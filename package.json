@@ -15,7 +15,7 @@
     "bs58": "^6.0.0",
     "d3": "^7.9.0",
     "date-fns": "^3.6.0",
-    "frog": "^0.16.0",
+    "frog": "^0.16.1",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
     "hono": "^4.5.2",
@@ -26,14 +26,14 @@
     "react-dom": "^18.3.1",
     "sanitize-html": "^2.13.0",
     "satori-html": "^0.3.2",
-    "tailwind-merge": "^2.5.0",
+    "tailwind-merge": "^2.5.2",
     "valibot": "^0.37.0",
-    "viem": "^2.19.3"
+    "viem": "^2.19.6"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.3.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/sanitize-html": "^2.11.0",
@@ -42,7 +42,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "typescript": "^5.5.4",
-    "vercel": "^35.2.4"
+    "vercel": "^36.0.0"
   },
-  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
+  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247"
 }
