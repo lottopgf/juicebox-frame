@@ -76,12 +76,13 @@ export async function RewardsImage(ctx: ImageContext) {
                 <IconJuicebox tw="m-auto h-48 w-48 opacity-10" />
               )}
             </div>
-            <div tw="flex flex-col" style={{ gap: 6 * 3 }}>
-              <div style={{ display: "block", lineClamp: 2 }}>
+            <div tw="flex flex-1 flex-col text-4xl" style={{ gap: 6 * 3 }}>
+              <div tw="text-[50px]" style={{ display: "block", lineClamp: 2 }}>
                 {reward.name}
               </div>
+
               <div tw="flex items-center" style={{ gap: 8 }}>
-                <IconEthereum tw="h-[56px] w-[56px]" />
+                <IconEthereum tw="h-[40px] w-[40px]" />
                 <span>{formatEther(reward.price)} ETH</span>
               </div>
               <div
