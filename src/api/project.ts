@@ -7,6 +7,7 @@ import { unstable_cache } from "next/cache";
 import {
   array,
   flatten,
+  type InferOutput,
   nullable,
   number,
   object,
@@ -64,6 +65,8 @@ const RewardSchema = object({
   symbol: string(),
   tiers: nullable(array(RewardTierSchema)),
 });
+
+export type Reward = InferOutput<typeof RewardSchema>;
 
 const ProjectSchema = object({
   handle: nullable(string()),

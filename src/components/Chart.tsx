@@ -57,8 +57,8 @@ export async function renderChart(data: DataPoint[]) {
       tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
     const text = textNode.text();
 
-    const x = parseFloat(rawX) + marginLeft;
-    const y = parseFloat(rawY) + marginTop + height;
+    const x = parseFloat(rawX ?? "") + marginLeft;
+    const y = parseFloat(rawY ?? "") + marginTop + height;
 
     const labelWidth = 75;
 
@@ -99,7 +99,7 @@ export async function renderChart(data: DataPoint[]) {
     const text = textNode.text();
 
     const x = 0;
-    const y = parseFloat(rawY) + marginTop;
+    const y = parseFloat(rawY ?? "") + marginTop;
 
     tick
       .append("div")

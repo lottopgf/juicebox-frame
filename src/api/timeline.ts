@@ -127,7 +127,7 @@ export async function getTimeline(params: GetTimelineParams) {
     if (!point) continue;
 
     points.push({
-      timestamp: params.timelineBlocks.timestamps[i],
+      timestamp: params.timelineBlocks.timestamps[i]!,
       trendingScore: parseEther(BigInt(point.trendingScore)),
       balance: parseEther(BigInt(point.currentBalance)),
       volume: parseEther(BigInt(point.volume)),

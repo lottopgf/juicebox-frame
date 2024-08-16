@@ -20,7 +20,7 @@ import {
   COLOR_BG_SPLIT_LIGHT,
   COLOR_TEXT_SPLIT,
 } from "@/styles/colors";
-import { Button, FrameContext, type ImageContext } from "frog";
+import { Button, type FrameContext, type ImageContext } from "frog";
 import { twMerge } from "tailwind-merge";
 
 export async function HomeScreen(ctx: FrameContext) {

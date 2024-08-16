@@ -12,7 +12,7 @@ import { Title } from "@/components/Title";
 import { CACHE_TIME } from "@/lib/config";
 import { getProjectId } from "@/lib/parameters";
 import { COLOR_BG_MELON_200, COLOR_BG_MELON_500 } from "@/styles/colors";
-import { Button, FrameContext, type ImageContext } from "frog";
+import { Button, type FrameContext, type ImageContext } from "frog";
 import honoJSX from "hono/jsx";
 import parse from "html-react-parser";
 import { twMerge } from "tailwind-merge";

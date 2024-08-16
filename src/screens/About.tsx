@@ -11,7 +11,7 @@ import { CACHE_TIME } from "@/lib/config";
 import { formatRichText } from "@/lib/format";
 import { getProjectId } from "@/lib/parameters";
 import { COLOR_BG_BLUEBS_200, COLOR_BG_BLUEBS_500 } from "@/styles/colors";
-import { Button, FrameContext, type ImageContext } from "frog";
+import { Button, type FrameContext, type ImageContext } from "frog";
 
 export async function AboutImage(ctx: ImageContext) {
   const projectId = getProjectId(ctx);
