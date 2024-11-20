@@ -28,6 +28,9 @@ export async function TokenRewards({
 
   if (tokensPerEth === 0n) return <></>;
 
+  const receivedRate = 10000n - BigInt(cycleData.reservedRate);
+  const receivedTokensPerEth = (tokensPerEth * receivedRate) / 10000n;
+
   return (
     <div
       tw={twMerge(
@@ -35,7 +38,7 @@ export async function TokenRewards({
         tw,
       )}
     >
-      Receive {formatEther(tokensPerEth)} tokens per ETH paid
+      Receive {formatEther(receivedTokensPerEth)} tokens per ETH paid
     </div>
   );
 }
