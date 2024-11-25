@@ -26,12 +26,16 @@ import { twMerge } from "tailwind-merge";
 export async function HomeScreen(ctx: FrameContext) {
   const projectId = getProjectId(ctx);
 
+  const hasRewards = await getProject({ projectId }).then(
+    (data) => data.nftCollections.length > 0,
+  );
+
   return ctx.res({
     image: `/${projectId}/images/home`,
     intents: [
       <Button action={`/${projectId}/activity`}>Activity</Button>,
       <Button action={`/${projectId}/about`}>About</Button>,
-      <Button action={`/${projectId}/rewards`}>Rewards</Button>,
+      hasRewards && <Button action={`/${projectId}/rewards`}>Rewards</Button>,
     ],
   });
 }

@@ -39,12 +39,16 @@ export async function AboutImage(ctx: ImageContext) {
 export async function AboutScreen(ctx: FrameContext) {
   const projectId = getProjectId(ctx);
 
+  const hasRewards = await getProject({ projectId }).then(
+    (data) => data.nftCollections.length > 0,
+  );
+
   return ctx.res({
     image: `/${projectId}/images/about`,
     intents: [
       <BackButton id={projectId} />,
       <Button action={`/${projectId}/activity`}>Activity</Button>,
-      <Button action={`/${projectId}/rewards`}>Rewards</Button>,
+      hasRewards && <Button action={`/${projectId}/rewards`}>Rewards</Button>,
     ],
   });
 }
