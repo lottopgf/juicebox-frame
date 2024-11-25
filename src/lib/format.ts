@@ -12,6 +12,9 @@ export function formatEther(amount: bigint) {
 }
 
 export function formatRichText(text: string) {
+  // Force extra space at the end of each paragraph
+  text = text.replace(/<\/p>/g, " </p>");
+  // Remove all HTML
   return sanitize(text, {
     allowedTags: [],
     allowedAttributes: {},
