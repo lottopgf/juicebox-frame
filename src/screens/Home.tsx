@@ -25,14 +25,16 @@ import { twMerge } from "tailwind-merge";
 
 export async function HomeScreen(ctx: FrameContext) {
   const projectId = getProjectId(ctx);
+  const data = await getProject({ projectId });
 
-  const hasRewards = await getProject({ projectId }).then(
-    (data) => data.nftCollections.length > 0,
-  );
+  const hasRewards = data.nftCollections.length > 0;
 
   return ctx.res({
     image: `/${projectId}/images/home`,
     intents: [
+      <Button.MiniApp prompt action={`/${projectId}/miniapps/payment`}>
+        {data.metadata.payText ?? "Contribute"}
+      </Button.MiniApp>,
       <Button action={`/${projectId}/activity`}>Activity</Button>,
       <Button action={`/${projectId}/about`}>About</Button>,
       hasRewards && <Button action={`/${projectId}/rewards`}>Rewards</Button>,
