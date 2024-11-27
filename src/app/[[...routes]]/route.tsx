@@ -1,5 +1,6 @@
 /** @jsxImportSource frog/jsx */
 
+import { APP_URL } from "@/lib/config";
 import { getProjectId } from "@/lib/parameters";
 import { AboutImage, AboutScreen } from "@/screens/About";
 import { ActivityImage, ActivityScreen } from "@/screens/Activity";
@@ -55,12 +56,12 @@ app.frame("/:id/rewards/:rewardId", RewardsScreen);
 app.image("/:id/images/rewards/:rewardId", RewardsImage);
 
 app.miniApp(
-  "/:id/payment/miniapps",
+  "/:id/payment/miniapp",
   (ctx) => {
     const projectId = getProjectId(ctx);
     return ctx.res({
       title: "Juicebox Frame",
-      url: `${process.env.VERCEL_URL ?? "http://localhost:3000"}/${projectId}/miniapp/payment`,
+      url: `${APP_URL}/${projectId}/~/miniapps/payment`,
     });
   },
   {

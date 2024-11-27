@@ -1,4 +1,4 @@
-import { PaymentComponent } from "@/app/[projectId]/miniapp/payment/component";
+import { PaymentComponent } from "./component";
 
 export default async function PaymentApp({
   params,

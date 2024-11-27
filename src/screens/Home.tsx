@@ -32,7 +32,7 @@ export async function HomeScreen(ctx: FrameContext) {
   return ctx.res({
     image: `/${projectId}/images/home`,
     intents: [
-      <Button.MiniApp prompt action={`/${projectId}/miniapps/payment`}>
+      <Button.MiniApp prompt action={`/${projectId}/payment/miniapp`}>
         {data.metadata.payText ?? "Contribute"}
       </Button.MiniApp>,
       <Button action={`/${projectId}/activity`}>Activity</Button>,
