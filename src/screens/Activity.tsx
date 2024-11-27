@@ -60,8 +60,6 @@ export async function ActivityScreen(ctx: FrameContext) {
     (data) => data.nftCollections.length > 0,
   );
 
-  console.log(hasRewards);
-
   return ctx.res({
     image: `/${projectId}/images/activity`,
     intents: [
