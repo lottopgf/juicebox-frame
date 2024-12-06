@@ -28,6 +28,7 @@ export async function ActivityImage(ctx: ImageContext) {
       timestamp: point.timestamp,
       value: point.volume,
     })),
+    { transformLabels: true },
   );
   const chartElem = parse(chart ?? "", {
     // @ts-ignore Confirmed it working, but typescript is just not happy :^)

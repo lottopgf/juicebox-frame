@@ -12,7 +12,11 @@ interface DataPoint {
   value: number;
 }
 
-export async function renderChart(data: DataPoint[]) {
+export async function renderChart(
+  data: DataPoint[],
+  options?: { transformLabels?: boolean },
+) {
+  const transformLabels = options?.transformLabels ?? false;
   const width = 880;
   const height = 640;
 
@@ -49,28 +53,30 @@ export async function renderChart(data: DataPoint[]) {
         .tickSizeOuter(0),
     );
 
-  xGroup.selectAll(".tick").each((d, i, nodes) => {
-    // @ts-ignore
-    const tick = d3.select<SVGGElement>(nodes[i]);
-    const textNode = tick.select("text");
-    const [, rawX, rawY] =
-      tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
-    const text = textNode.text();
+  if (transformLabels) {
+    xGroup.selectAll(".tick").each((d, i, nodes) => {
+      // @ts-ignore
+      const tick = d3.select<SVGGElement>(nodes[i]);
+      const textNode = tick.select("text");
+      const [, rawX, rawY] =
+        tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
+      const text = textNode.text();
 
-    const x = parseFloat(rawX ?? "") + marginLeft;
-    const y = parseFloat(rawY ?? "") + marginTop + height;
+      const x = parseFloat(rawX ?? "") + marginLeft;
+      const y = parseFloat(rawY ?? "") + marginTop + height;
 
-    const labelWidth = 75;
+      const labelWidth = 75;
 
-    tick
-      .append("div")
-      .attr(
-        "tw",
-        `absolute flex justify-center text-2xl text-center w-[${labelWidth}px] -ml-[${labelWidth / 2}px] mt-[5px] top-[${y}px] left-[${x}px]`,
-      )
-      .text(text);
-    textNode.remove();
-  });
+      tick
+        .append("div")
+        .attr(
+          "tw",
+          `absolute flex justify-center text-2xl text-center w-[${labelWidth}px] -ml-[${labelWidth / 2}px] mt-[5px] top-[${y}px] left-[${x}px]`,
+        )
+        .text(text);
+      textNode.remove();
+    });
+  }
 
   // Add Y axis
   const y = d3
@@ -90,26 +96,28 @@ export async function renderChart(data: DataPoint[]) {
         .attr("stroke-opacity", 0.2),
     );
 
-  yGroup.selectAll(".tick").each((d, i, nodes) => {
-    // @ts-ignore
-    const tick = d3.select<SVGGElement>(nodes[i]);
-    const textNode = tick.select("text");
-    const [, , rawY] =
-      tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
-    const text = textNode.text();
+  if (transformLabels) {
+    yGroup.selectAll(".tick").each((d, i, nodes) => {
+      // @ts-ignore
+      const tick = d3.select<SVGGElement>(nodes[i]);
+      const textNode = tick.select("text");
+      const [, , rawY] =
+        tick.attr("transform").match(/translate\(([\d.]*),([\d.]*)\)/) ?? [];
+      const text = textNode.text();
 
-    const x = 0;
-    const y = parseFloat(rawY ?? "") + marginTop;
+      const x = 0;
+      const y = parseFloat(rawY ?? "") + marginTop;
 
-    tick
-      .append("div")
-      .attr(
-        "tw",
-        `absolute flex justify-end text-2xl text-right w-[50px] -mt-[22px] top-[${y}px] left-[${x}px]`,
-      )
-      .text(text);
-    textNode.remove();
-  });
+      tick
+        .append("div")
+        .attr(
+          "tw",
+          `absolute flex justify-end text-2xl text-right w-[50px] -mt-[22px] top-[${y}px] left-[${x}px]`,
+        )
+        .text(text);
+      textNode.remove();
+    });
+  }
 
   // Add the line
   wrapper
@@ -127,6 +135,8 @@ export async function renderChart(data: DataPoint[]) {
         .x((d) => x(fromUnixTime(d.timestamp)))
         .y((d) => y(d.value)),
     );
+
+  console.log(svg.node());
 
   return svg.node()?.outerHTML;
 }
