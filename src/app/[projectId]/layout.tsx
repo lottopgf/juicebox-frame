@@ -1,3 +1,8 @@
+"use client";
+
+import { Providers } from "@/app/[projectId]/providers";
+import "./globals.css";
+
 export default function MiniAppRootLayout({
   children,
 }: {
@@ -6,7 +11,9 @@ export default function MiniAppRootLayout({
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <main>
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );

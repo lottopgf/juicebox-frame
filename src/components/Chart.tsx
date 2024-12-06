@@ -14,11 +14,11 @@ interface DataPoint {
 
 export async function renderChart(
   data: DataPoint[],
-  options?: { transformLabels?: boolean },
+  options?: { width?: number; height?: number; transformLabels?: boolean },
 ) {
   const transformLabels = options?.transformLabels ?? false;
-  const width = 880;
-  const height = 640;
+  const width = options?.width ?? 880;
+  const height = options?.height ?? 640;
 
   const marginLeft = 75;
   const marginRight = 25;

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@farcaster/frame-sdk": "^0.0.10",
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^3.9.1",
     "@landas/ethereum-block-by-date": "^1.5.1",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
