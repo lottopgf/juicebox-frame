@@ -111,7 +111,6 @@ export function PaymentComponent({ projectId }: { projectId: number }) {
     );
 
   async function onSubmit({ amount, message }: FieldsOutput) {
-    console.log(amount, message);
     if (!address) return;
 
     await writeContractAsync({
@@ -258,8 +257,6 @@ async function getTokenRewards({
     reservedRate: cycleData.reservedRate,
     weight: cycleData.weight,
   });
-
-  console.log(cycleData, tokensPerEth);
 
   if (tokensPerEth === 0n) return null;
 

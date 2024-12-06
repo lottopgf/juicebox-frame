@@ -10,6 +10,7 @@ export const config = createConfig(
     walletConnectProjectId: "cd15473a8bd1a71d54fa4c0ed7cfd476",
     chains: [mainnet],
     connectors: [frameConnector()],
+    ssr: false,
   }),
 );
 

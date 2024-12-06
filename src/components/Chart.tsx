@@ -136,7 +136,5 @@ export async function renderChart(
         .y((d) => y(d.value)),
     );
 
-  console.log(svg.node());
-
   return svg.node()?.outerHTML;
 }
