@@ -1,3 +1,4 @@
+import { getProject } from "@/api/project";
 import { APP_URL } from "@/lib/config";
 import type { Metadata } from "next";
 import { PaymentComponent } from "./component";
@@ -7,8 +8,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ projectId: string }>;
 }): Promise<Metadata> {
-  const { projectId } = await params;
+  const { projectId: rawProjectId } = await params;
+  const projectId = parseInt(rawProjectId);
+  const project = await getProject({ projectId });
+
   return {
+    title: project.metadata.name,
     other: {
       "fc:frame": JSON.stringify({
         version: "next",
