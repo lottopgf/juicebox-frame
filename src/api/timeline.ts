@@ -1,3 +1,5 @@
+"use server";
+
 import { CHAIN, TIMELINE_RANGE_IN_DAYS } from "@/lib/config";
 import { parseEther } from "@/lib/format";
 import { graphClient } from "@/lib/graph";

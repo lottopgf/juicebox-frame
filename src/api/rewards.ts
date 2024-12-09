@@ -1,3 +1,5 @@
+"use server";
+
 import { CACHE_TIME } from "@/lib/config";
 import { ipfsURL } from "@/lib/ipfs";
 import { unstable_cache } from "next/cache";
@@ -19,24 +21,29 @@ const cachedMetadataRequest = unstable_cache(
 );
 
 export async function resolveRewards(rewards: Reward[]) {
-  const tiers = rewards.map(reward => reward.tiers ?? []).flat(1);
+  const tiers = rewards.map((reward) => reward.tiers ?? []).flat(1);
 
-  const resolvedRewards = await Promise.all(tiers.map(async (tier) => {
-    const url = ipfsURL(tier.encodedIpfsUri);
-    if (!url) {
-      return null;
-    }
-    const metadata = await cachedMetadataRequest(url);
-    const result = safeParse(RewardMetadataSchema, metadata);
+  const resolvedRewards = await Promise.all(
+    tiers.map(async (tier) => {
+      const url = ipfsURL(tier.encodedIpfsUri);
+      if (!url) {
+        return null;
+      }
+      const metadata = await cachedMetadataRequest(url);
+      const result = safeParse(RewardMetadataSchema, metadata);
 
-    if (!result.success) {
-      console.error(`Reward tier metadata parse error: %O`, flatten(result.issues));
-      console.log("Raw data:", metadata);
-      return null;
-    }
+      if (!result.success) {
+        console.error(
+          `Reward tier metadata parse error: %O`,
+          flatten(result.issues),
+        );
+        console.log("Raw data:", metadata);
+        return null;
+      }
 
-    return result.output;
-  }));
+      return result.output;
+    }),
+  );
 
   const mergedRewardTiers = tiers.map((tier, index) => {
     const metadata = resolvedRewards.at(index);
@@ -46,7 +53,7 @@ export async function resolveRewards(rewards: Reward[]) {
       image: metadata?.image,
       name: metadata?.name,
       description: metadata?.description,
-    }
+    };
   });
 
   return mergedRewardTiers;
