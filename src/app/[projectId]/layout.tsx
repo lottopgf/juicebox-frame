@@ -1,6 +1,7 @@
 "use client";
 
 import { Providers } from "@/app/[projectId]/providers";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export default function MiniAppRootLayout({
@@ -14,6 +15,7 @@ export default function MiniAppRootLayout({
         <main>
           <Providers>{children}</Providers>
         </main>
+        <Toaster />
       </body>
     </html>
   );
