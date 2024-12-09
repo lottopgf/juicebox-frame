@@ -10,11 +10,9 @@ export default function MiniAppRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <main>
-          <Providers>{children}</Providers>
-        </main>
+    <html lang="en" className="h-dvh">
+      <body className="h-full">
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

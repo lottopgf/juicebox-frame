@@ -3,6 +3,7 @@
 import { JBETHPaymentTerminalABI } from "@/abi/JBETHPaymentTerminal";
 import { getCycle } from "@/api/cycle";
 import { getProject } from "@/api/project";
+import { Header } from "@/app/[projectId]/components/Header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,19 +14,15 @@ import {
   JB_ETH_TOKEN_ADDRESS,
   JBETHPAYMENTTERMINAL_ADDRESS,
 } from "@/lib/config";
-import { formatRichText } from "@/lib/format";
 import { getTokensPerEth } from "@/lib/juicebox";
 import { cn } from "@/lib/utils";
+import { COLOR_BG_SPLIT_LIGHT } from "@/styles/colors";
 import sdk from "@farcaster/frame-sdk";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useQuery } from "@tanstack/react-query";
 import { ConnectKitButton } from "connectkit";
-import {
-  AlertTriangleIcon,
-  ChevronDownIcon,
-  ExternalLinkIcon,
-} from "lucide-react";
+import { AlertTriangleIcon, ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -132,109 +129,94 @@ export function PaymentComponent({ projectId }: { projectId: number }) {
   }
 
   return (
-    <div className="p-4">
-      <header className="mb-8 space-y-4 border-b pb-4">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-3xl">
-            Contribute to {project.metadata.name}
-          </h1>
-          <ConnectKitButton />
-        </div>
-      </header>
-      <div className="mb-8 space-y-4">
-        <p className="line-clamp-5 max-w-prose text-balance">
-          {formatRichText(project.metadata.description)}
-        </p>
-        <Link
-          href={`https://juicebox.money/v2/p/${projectId}?tabid=about`}
-          className="inline-flex items-center gap-1 underline decoration-dotted underline-offset-2 hover:no-underline"
-        >
-          Learn more <ExternalLinkIcon size="1em" />{" "}
-        </Link>
-      </div>
-      {/* TODO: Figure out the typing here. The valibot resolver transforms
-       * to the right types, but react-hook-form doesn't like it.
-       * @ts-ignore-next-line */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="amount">Amount</Label>
-          <Input
-            type="text"
-            placeholder="Amount"
-            id="amount"
-            {...register("amount")}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="amount"
-            render={({ message }) => (
-              <p className="text-sm text-red-500">{message}</p>
-            )}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="message">Message</Label>
-          <Textarea
-            placeholder="Message"
-            id="message"
-            {...register("message")}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="message"
-            render={({ message }) => (
-              <p className="text-sm text-red-500">{message}</p>
-            )}
-          />
-        </div>
-        <div>Rewards: {formatEther(tokenRewards ?? 0n)} tokens per ETH</div>
-        {project.metadata.payDisclosure && (
-          <Notice notice={project.metadata.payDisclosure} />
-        )}
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Controller
-              control={control}
-              name="terms"
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <Checkbox
-                  id="terms"
-                  onCheckedChange={onChange}
-                  onBlur={onBlur}
-                  checked={value}
-                />
+    <div className={cn("min-h-full text-neutral-900", COLOR_BG_SPLIT_LIGHT)}>
+      <Header projectId={projectId} project={project} />
+      <div className="mx-auto max-w-prose px-4">
+        {/* TODO: Figure out the typing here. The valibot resolver transforms
+         * to the right types, but react-hook-form doesn't like it.
+         * @ts-ignore-next-line */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <h2 className="text-2xl font-semibold">Contribute</h2>
+          <div className="space-y-2">
+            <Label htmlFor="amount">Amount</Label>
+            <Input
+              type="text"
+              placeholder="Amount"
+              id="amount"
+              {...register("amount")}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="amount"
+              render={({ message }) => (
+                <p className="text-sm text-red-500">{message}</p>
               )}
             />
-            <label
-              htmlFor="terms"
-              className="text-sm peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              I understand and accept{" "}
-              {project.metadata.payDisclosure && `this project's notice and`}{" "}
-              the{" "}
-              <Link
-                target="_blank"
-                href="https://docs.juicebox.money/dev/learn/risks"
-                className="underline decoration-dotted"
-              >
-                risks
-              </Link>{" "}
-              associated with the Juicebox protocol.
-            </label>
           </div>
-          <ErrorMessage
-            errors={errors}
-            name="terms"
-            render={({ message }) => (
-              <p className="text-sm text-red-500">{message}</p>
-            )}
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="message">Message</Label>
+            <Textarea
+              placeholder="Message"
+              id="message"
+              {...register("message")}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="message"
+              render={({ message }) => (
+                <p className="text-sm text-red-500">{message}</p>
+              )}
+            />
+          </div>
+          <div>Rewards: {formatEther(tokenRewards ?? 0n)} tokens per ETH</div>
+          {project.metadata.payDisclosure && (
+            <Notice notice={project.metadata.payDisclosure} />
+          )}
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <Controller
+                control={control}
+                name="terms"
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <Checkbox
+                    id="terms"
+                    onCheckedChange={onChange}
+                    onBlur={onBlur}
+                    checked={value}
+                  />
+                )}
+              />
+              <label
+                htmlFor="terms"
+                className="text-sm peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                I understand and accept{" "}
+                {project.metadata.payDisclosure && `this project's notice and`}{" "}
+                the{" "}
+                <Link
+                  target="_blank"
+                  href="https://docs.juicebox.money/dev/learn/risks"
+                  className="underline decoration-dotted"
+                >
+                  risks
+                </Link>{" "}
+                associated with the Juicebox protocol.
+              </label>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="terms"
+              render={({ message }) => (
+                <p className="text-sm text-red-500">{message}</p>
+              )}
+            />
+          </div>
 
-        <Button className="w-full" type="submit">
-          Pay
-        </Button>
-      </form>
+          <Button className="w-full" type="submit">
+            Pay
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
