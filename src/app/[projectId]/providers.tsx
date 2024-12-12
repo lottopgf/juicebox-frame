@@ -1,8 +1,10 @@
 import { frameConnector } from "@/lib/connector";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { useEffect } from "react";
 import { mainnet } from "viem/chains";
 import { createConfig, http, WagmiProvider } from "wagmi";
+import sdk from "@farcaster/frame-sdk";
 
 export const config = createConfig(
   getDefaultConfig({
@@ -24,6 +26,10 @@ const queryClient = new QueryClient({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    sdk.actions.ready();
+  }, []);
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>

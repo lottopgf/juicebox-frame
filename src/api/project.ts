@@ -154,3 +154,5 @@ export async function getProject(params: GetProjectParams) {
 
   return { ...projectData, metadata: metadataResult.output };
 }
+
+export type Project = Awaited<ReturnType<typeof getProject>>;
