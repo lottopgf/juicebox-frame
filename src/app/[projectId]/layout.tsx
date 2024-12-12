@@ -11,7 +11,7 @@ export default function MiniAppRootLayout({
 }) {
   return (
     <html lang="en" className="h-dvh">
-      <body className="h-full">
+      <body className="dark h-full">
         <Providers>{children}</Providers>
         <Toaster />
       </body>

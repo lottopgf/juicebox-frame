@@ -5,8 +5,6 @@ import { formatEther } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTrendingPercentage } from "@/lib/juicebox";
 import { cn } from "@/lib/utils";
-import { COLOR_BG_SPLIT, COLOR_TEXT_SPLIT } from "@/styles/colors";
-import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,7 +30,7 @@ export function Header({
     <header className="mb-4 space-y-4">
       <Link
         href={`https://juicebox.money/v2/p/${projectId}?tabid=about`}
-        className={cn(`block w-full`, COLOR_BG_SPLIT)}
+        className={cn(`block w-full bg-slate-950 text-white`)}
       >
         <div className="mx-auto flex w-full max-w-prose items-center justify-between px-4 py-2 md:py-4">
           <span className="flex-shrink-0 text-xl leading-normal"></span>
@@ -57,9 +55,7 @@ export function Header({
           </div>
           <div className="flex justify-end gap-2 text-right md:gap-6">
             <div className="flex flex-col items-end">
-              <span
-                className={cn("text-xs uppercase md:text-sm", COLOR_TEXT_SPLIT)}
-              >
+              <span className={cn("text-xs uppercase text-slate-200")}>
                 Payments
               </span>
               <span className="font-medium leading-snug md:text-2xl">
@@ -67,9 +63,7 @@ export function Header({
               </span>
             </div>
             <div className="flex flex-col items-end">
-              <span
-                className={cn("text-xs uppercase md:text-sm", COLOR_TEXT_SPLIT)}
-              >
+              <span className={cn("text-xs uppercase text-slate-200")}>
                 Total Raised
               </span>
               <span className="font-medium leading-snug md:text-2xl">
@@ -78,12 +72,7 @@ export function Header({
             </div>
             {trendingPercentage !== Infinity && (
               <div className="flex flex-col items-end">
-                <span
-                  className={cn(
-                    "text-xs uppercase md:text-sm",
-                    COLOR_TEXT_SPLIT,
-                  )}
-                >
+                <span className={cn("text-xs uppercase text-slate-200")}>
                   Last 7 days
                 </span>
                 <span className="font-medium leading-snug md:text-2xl">
@@ -93,9 +82,12 @@ export function Header({
             )}
           </div>
         </div>
-        <h2 className="text-2xl font-bold md:text-3xl">
-          {project.metadata.name}
-        </h2>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold md:text-3xl">
+            {project.metadata.name}
+          </h2>
+          <p>{project.metadata.projectTagline}</p>
+        </div>
       </div>
     </header>
   );
