@@ -2,10 +2,11 @@ import { getProject } from "@/api/project";
 import { ActivitySectionContainer } from "@/app/[projectId]/activity/component";
 import { Header } from "@/app/[projectId]/components/Header";
 import { APP_URL } from "@/lib/config";
-import { getTokenRewards } from "@/lib/rewards";
+import { getCycleData, getTokenRewards } from "@/lib/rewards";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { PaymentComponent } from "./component";
+import { PayForm } from "./components/pay-form/pay-form";
 
 export async function generateMetadata({
   params,
@@ -47,7 +48,7 @@ export default async function PaymentApp({
 
   const project = await getProject({ projectId });
 
-  const tokenRewards = await getTokenRewards({
+  const cycleData = await getCycleData({
     projectId,
     cycleId: project.latestFundingCycle,
   });
@@ -56,10 +57,10 @@ export default async function PaymentApp({
     <div className={cn("min-h-full bg-slate-900 text-gray-100")}>
       <Header projectId={projectId} project={project} />
       <div className="mx-auto max-w-prose space-y-4 px-4 pb-4">
-        <PaymentComponent
+        <PayForm
           projectId={projectId}
           project={project}
-          tokenRewards={tokenRewards}
+          cycleData={cycleData}
         />
         <ActivitySectionContainer projectId={projectId} />
       </div>

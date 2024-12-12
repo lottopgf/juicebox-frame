@@ -14,6 +14,7 @@ import {
   safeParse,
   string,
   transform,
+  type InferOutput,
 } from "valibot";
 
 const cycleQuery = gql`
@@ -38,6 +39,8 @@ const CycleSchema = object({
   reservedRate: number(),
   useDataSourceForPay: boolean(),
 });
+
+export type CycleData = InferOutput<typeof CycleSchema>;
 
 interface GetCycleParams {
   projectVersion?: string;
