@@ -25,7 +25,7 @@ export function Header({
   });
 
   return (
-    <header className="mb-4 space-y-4">
+    <header className="mb-6 space-y-4">
       <Link
         href={`https://juicebox.money/v2/p/${projectId}?tabid=about`}
         className={cn(`block w-full bg-slate-950 text-white`)}
