@@ -1,3 +1,5 @@
+"use server";
+
 import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
 import { cidFromURL, decodeEncodedIPFSUri, ipfsURL } from "@/lib/ipfs";

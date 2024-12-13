@@ -1,3 +1,5 @@
+"use server";
+
 import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
 import { gql } from "graphql-request";

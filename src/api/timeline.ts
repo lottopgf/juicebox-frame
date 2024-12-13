@@ -1,4 +1,6 @@
-import { CHAIN, TIMELINE_RANGE_IN_DAYS } from "@/lib/config";
+"use server";
+
+import { CACHE_TIME, CHAIN, TIMELINE_RANGE_IN_DAYS } from "@/lib/config";
 import { parseEther } from "@/lib/format";
 import { graphClient } from "@/lib/graph";
 import EthDater from "@landas/ethereum-block-by-date";
@@ -9,7 +11,7 @@ import { createPublicClient, fallback, http } from "viem";
 
 const client = createPublicClient({
   chain: CHAIN,
-  transport: fallback([http(process.env.RPC_URL), http()]),
+  transport: fallback([http(process.env.NEXT_PUBLIC_RPC_HTTP), http()]),
 });
 
 interface EthBlock {
@@ -27,6 +29,8 @@ const cachedTimelineBlocksRequest = unstable_cache(
       dater.getDate(end.toISOString()),
     ]);
   },
+  ["timeline-blocks"],
+  { revalidate: CACHE_TIME },
 );
 
 /**
@@ -117,6 +121,8 @@ const cachedTimelineRequest = unstable_cache(
       id: `${projectVersion}-${projectId}`,
       ...timelineBlocks.blocks,
     }),
+  ["timeline"],
+  { revalidate: CACHE_TIME },
 );
 
 export async function getTimeline(params: GetTimelineParams) {

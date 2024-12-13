@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [{ hostname: "jbm.infura-ipfs.io" }],
+  },
+};
 
 export default nextConfig;

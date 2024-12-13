@@ -1,5 +1,7 @@
 /** @jsxImportSource frog/jsx */
 
+import { APP_URL } from "@/lib/config";
+import { getProjectId } from "@/lib/parameters";
 import { AboutImage, AboutScreen } from "@/screens/About";
 import { ActivityImage, ActivityScreen } from "@/screens/Activity";
 import { HomeImage, HomeScreen } from "@/screens/Home";
@@ -52,6 +54,23 @@ app.image("/:id/images/activity", ActivityImage);
 app.frame("/:id/rewards", RewardsScreen);
 app.frame("/:id/rewards/:rewardId", RewardsScreen);
 app.image("/:id/images/rewards/:rewardId", RewardsImage);
+
+app.miniApp(
+  "/:id/payment/miniapp",
+  (ctx) => {
+    const projectId = getProjectId(ctx);
+    return ctx.res({
+      title: "Juicebox Frame",
+      url: `${APP_URL}/${projectId}/~/miniapps/payment`,
+    });
+  },
+  {
+    name: "Juicebox Frame",
+    description: "Contribute to Juicebox projects through a frame!",
+    imageUrl: "",
+    icon: "hash",
+  },
+);
 
 devtools(app, { serveStatic });
 

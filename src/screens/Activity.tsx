@@ -28,6 +28,7 @@ export async function ActivityImage(ctx: ImageContext) {
       timestamp: point.timestamp,
       value: point.volume,
     })),
+    { transformLabels: true },
   );
   const chartElem = parse(chart ?? "", {
     // @ts-ignore Confirmed it working, but typescript is just not happy :^)
@@ -59,8 +60,6 @@ export async function ActivityScreen(ctx: FrameContext) {
   const hasRewards = await getProject({ projectId }).then(
     (data) => data.nftCollections.length > 0,
   );
-
-  console.log(hasRewards);
 
   return ctx.res({
     image: `/${projectId}/images/activity`,
