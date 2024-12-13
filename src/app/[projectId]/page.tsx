@@ -55,7 +55,7 @@ export default async function PaymentApp({
   return (
     <div className={cn("min-h-full bg-slate-900 text-gray-100")}>
       <Header projectId={projectId} project={project} />
-      <div className="mx-auto max-w-prose space-y-4 px-4 pb-4">
+      <div className="mx-auto max-w-prose space-y-6 px-4 pb-4">
         <PayForm
           projectId={projectId}
           project={project}

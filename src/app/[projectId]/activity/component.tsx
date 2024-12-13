@@ -68,7 +68,7 @@ export function ActivitySection({ data }: { data: ProjectTimelinePoint[] }) {
   };
 
   return (
-    <ChartContainer className="min-h-[330px]" config={chartConfig}>
+    <ChartContainer className="aspect-[3/2] w-full" config={chartConfig}>
       <LineChart
         accessibilityLayer
         data={chartData}
@@ -107,7 +107,7 @@ export function ActivitySection({ data }: { data: ProjectTimelinePoint[] }) {
 
 export function ActivitySectionSkeleton() {
   return (
-    <div className="h-[330px] w-full animate-pulse rounded-lg bg-slate-700" />
+    <div className="aspect-[3/2] w-full animate-pulse rounded-lg bg-slate-700" />
   );
 }
 
