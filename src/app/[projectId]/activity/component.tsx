@@ -69,7 +69,11 @@ export function ActivitySection({ data }: { data: ProjectTimelinePoint[] }) {
 
   return (
     <ChartContainer className="min-h-[330px]" config={chartConfig}>
-      <LineChart accessibilityLayer data={chartData} margin={{ left: 0 }}>
+      <LineChart
+        accessibilityLayer
+        data={chartData}
+        margin={{ left: 8, right: 8 }}
+      >
         <CartesianGrid stroke="rgba(1,1,1,0.2)" vertical={false} />
         <XAxis dataKey="timestamp" {...xAxisArgs} />
         <YAxis dataKey="value" {...yAxisArgs} />
@@ -118,14 +122,10 @@ export function ActivitySectionContainer({ projectId }: { projectId: number }) {
 
   return (
     <section className="space-y-4">
-      <header className="flex items-center justify-between">
-        <h2 className="text-2xl font-medium">Activity</h2>
-        <Link href="/activity" className="inline-flex items-center gap-1">
-          View more on juicebox.money
-          <ExternalLinkIcon size="1em" />
-        </Link>
-      </header>
-      <div className="border-grey-200 rounded-lg border border-slate-600 bg-slate-700 p-4 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)]">
+      <div className="border-grey-200 space-y-4 rounded-lg border border-slate-600 bg-slate-700 p-4 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)]">
+        <header className="flex items-center justify-between text-slate-100">
+          <h2 className="text-2xl font-medium">Activity</h2>
+        </header>
         {isLoading ? (
           <ActivitySectionSkeleton />
         ) : (

@@ -82,7 +82,7 @@ export function PayStep({
 
   return (
     <div className="flex flex-col gap-4 p-3 pt-4">
-      <h1 className="text-3xl font-medium">Pay</h1>
+      <h2 className="text-2xl font-medium">Pay</h2>
       <div className="flex flex-col gap-3">
         <div className="overflow-hidden rounded-lg border border-slate-600 bg-slate-900 px-4 py-3 text-sm text-slate-200">
           <TokenView token={fromToken} description={formattedSellBalance} />
