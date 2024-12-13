@@ -1,3 +1,5 @@
+import type { CycleData } from "@/api/cycle";
+
 const BPS = 10_000n;
 const WAD = BigInt(1e18);
 
@@ -39,4 +41,39 @@ export function getTrendingPercentage({
   }
 
   return percentRounded;
+}
+
+export const MAX_RESERVED_PERCENT = 10_000;
+
+export function getTokenRewards(cycleData: CycleData) {
+  const tokensPerEth = getTokensPerEth({
+    reservedRate: cycleData.reservedRate,
+    weight: cycleData.weight,
+  });
+
+  if (tokensPerEth === 0n) return null;
+
+  const receivedRate = 10000n - BigInt(cycleData.reservedRate);
+  return (tokensPerEth * receivedRate) / 10000n;
+}
+
+export function getTokenAToBQuote(
+  tokenAAmount: bigint,
+  cycleParams: CycleData,
+) {
+  const { weight, reservedRate } = cycleParams;
+  const weightRatio = BigInt(10 ** 18);
+  const totalTokens = (weight * tokenAAmount) / weightRatio;
+  const reservedTokens =
+    (weight * BigInt(reservedRate) * tokenAAmount) /
+    BigInt(MAX_RESERVED_PERCENT) /
+    weightRatio;
+
+  const payerTokens = totalTokens - reservedTokens;
+
+  return {
+    payerTokens,
+    reservedTokens,
+    totalTokens,
+  };
 }

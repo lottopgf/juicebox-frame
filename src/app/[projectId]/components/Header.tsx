@@ -1,4 +1,4 @@
-import type { getProject } from "@/api/project";
+import type { Project } from "@/api/project";
 import { ViewOnJuicebox } from "@/app/[projectId]/components/ViewOnJuicebox";
 import { IconJuicebox } from "@/app/[projectId]/graphics/IconJuicebox";
 import { formatEther } from "@/lib/format";
@@ -7,8 +7,6 @@ import { getTrendingPercentage } from "@/lib/juicebox";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-
-type Project = Awaited<ReturnType<typeof getProject>>;
 
 export function Header({
   projectId,
