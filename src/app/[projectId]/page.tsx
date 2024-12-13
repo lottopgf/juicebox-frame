@@ -2,10 +2,9 @@ import { getProject } from "@/api/project";
 import { ActivitySectionContainer } from "@/app/[projectId]/activity/component";
 import { Header } from "@/app/[projectId]/components/Header";
 import { APP_URL } from "@/lib/config";
-import { getCycleData, getTokenRewards } from "@/lib/rewards";
+import { getCycleData } from "@/lib/rewards";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { PaymentComponent } from "./component";
 import { PayForm } from "./components/pay-form/pay-form";
 
 export async function generateMetadata({

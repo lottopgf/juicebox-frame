@@ -11,7 +11,6 @@ import {
 import {
   getTokenAToBQuote,
   getTokenRewards,
-  getTokensPerEth,
 } from "@/lib/juicebox";
 import { FieldsSchema, type Fields } from "@/schemas/pay-from-schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
