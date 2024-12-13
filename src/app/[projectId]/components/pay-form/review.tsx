@@ -65,7 +65,7 @@ export function ReviewForm({
 
   return (
     <div className="flex flex-col gap-4 p-3 pt-4">
-      <h1 className="text-3xl font-medium">Review</h1>
+      <h2 className="text-2xl font-medium">Review</h2>
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 rounded-lg border border-slate-600 bg-slate-900 p-3 shadow-sm">
           <div className="flex flex-row items-center justify-between gap-3">
