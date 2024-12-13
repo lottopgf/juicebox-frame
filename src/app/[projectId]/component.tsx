@@ -80,16 +80,6 @@ export function PaymentComponent({
 
   const { address } = useAccount();
 
-  if (!address)
-    return (
-      <>
-        <header className="mb-8 space-y-4 border-b pb-4">
-          <ConnectKitButton />
-        </header>
-        <p>Please connect.</p>
-      </>
-    );
-
   async function onSubmit({ amount, message }: FieldsOutput) {
     if (!address) return;
 

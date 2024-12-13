@@ -1,6 +1,6 @@
 "use client";
 
-import type { getTimeline } from "@/api/timeline";
+import { getTimeline, getTimelineBlocks } from "@/api/timeline";
 import { IconEthereum } from "@/app/[projectId]/graphics/IconEthereum";
 import {
   ChartContainer,
@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { useQuery } from "@tanstack/react-query";
 import { extent, scaleUtc, utcFormat } from "d3";
 import { fromUnixTime } from "date-fns";
 import { ExternalLinkIcon } from "lucide-react";
@@ -67,6 +68,55 @@ export function ActivitySection({ data }: { data: ProjectTimelinePoint[] }) {
   };
 
   return (
+    <ChartContainer className="min-h-[330px]" config={chartConfig}>
+      <LineChart accessibilityLayer data={chartData} margin={{ left: 0 }}>
+        <CartesianGrid stroke="rgba(1,1,1,0.2)" vertical={false} />
+        <XAxis dataKey="timestamp" {...xAxisArgs} />
+        <YAxis dataKey="value" {...yAxisArgs} />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              labelFormatter={(_, payload) =>
+                utcFormat("%-m/%-d")(
+                  fromUnixTime(payload.at(0)?.payload.timestamp),
+                )
+              }
+            />
+          }
+        />
+        <Line
+          dataKey="value"
+          type="monotoneX"
+          stroke="orange"
+          strokeWidth={4}
+          strokeLinecap="round"
+          dot={false}
+          activeDot={{
+            r: 6,
+          }}
+        />
+      </LineChart>
+    </ChartContainer>
+  );
+}
+
+export function ActivitySectionSkeleton() {
+  return (
+    <div className="h-[330px] w-full animate-pulse rounded-lg bg-slate-700" />
+  );
+}
+
+export function ActivitySectionContainer({ projectId }: { projectId: number }) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["timeline", { projectId }],
+    async queryFn() {
+      const timelineBlocks = await getTimelineBlocks();
+      return await getTimeline({ projectId, timelineBlocks });
+    },
+  });
+
+  return (
     <section className="space-y-4">
       <header className="flex items-center justify-between">
         <h2 className="text-2xl font-medium">Activity</h2>
@@ -76,36 +126,11 @@ export function ActivitySection({ data }: { data: ProjectTimelinePoint[] }) {
         </Link>
       </header>
       <div className="border-grey-200 rounded-lg border border-slate-600 bg-slate-700 p-4 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)]">
-        <ChartContainer className="min-h-[100px]" config={chartConfig}>
-          <LineChart accessibilityLayer data={chartData} margin={{ left: 0 }}>
-            <CartesianGrid stroke="rgba(1,1,1,0.2)" vertical={false} />
-            <XAxis dataKey="timestamp" {...xAxisArgs} />
-            <YAxis dataKey="value" {...yAxisArgs} />
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  labelFormatter={(_, payload) =>
-                    utcFormat("%-m/%-d")(
-                      fromUnixTime(payload.at(0)?.payload.timestamp),
-                    )
-                  }
-                />
-              }
-            />
-            <Line
-              dataKey="value"
-              type="monotoneX"
-              stroke="orange"
-              strokeWidth={4}
-              strokeLinecap="round"
-              dot={false}
-              activeDot={{
-                r: 6,
-              }}
-            />
-          </LineChart>
-        </ChartContainer>
+        {isLoading ? (
+          <ActivitySectionSkeleton />
+        ) : (
+          <ActivitySection data={data ?? []} />
+        )}
       </div>
     </section>
   );

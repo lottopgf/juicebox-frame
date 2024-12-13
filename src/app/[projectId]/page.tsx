@@ -1,6 +1,5 @@
 import { getProject } from "@/api/project";
-import { getTimeline, getTimelineBlocks } from "@/api/timeline";
-import { ActivitySection } from "@/app/[projectId]/activity/component";
+import { ActivitySectionContainer } from "@/app/[projectId]/activity/component";
 import { Header } from "@/app/[projectId]/components/Header";
 import { APP_URL } from "@/lib/config";
 import { getTokenRewards } from "@/lib/rewards";
@@ -53,9 +52,6 @@ export default async function PaymentApp({
     cycleId: project.latestFundingCycle,
   });
 
-  const timelineBlocks = await getTimelineBlocks();
-  const points = await getTimeline({ projectId, timelineBlocks });
-
   return (
     <div className={cn("min-h-full bg-slate-900 text-gray-100")}>
       <Header projectId={projectId} project={project} />
@@ -65,7 +61,7 @@ export default async function PaymentApp({
           project={project}
           tokenRewards={tokenRewards}
         />
-        <ActivitySection data={points} />
+        <ActivitySectionContainer projectId={projectId} />
       </div>
     </div>
   );
