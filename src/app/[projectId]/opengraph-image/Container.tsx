@@ -1,5 +1,3 @@
-/** @jsxImportSource frog/jsx */
-
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 

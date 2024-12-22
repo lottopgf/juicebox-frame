@@ -1,8 +1,7 @@
-/** @jsxImportSource frog/jsx */
-
 export function LogoJuicebox({ tw }: { tw?: string }) {
   return (
     <svg
+      // @ts-expect-error
       tw={tw}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

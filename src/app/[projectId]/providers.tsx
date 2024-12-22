@@ -1,17 +1,17 @@
-import { frameConnector } from "@/lib/connector";
+import sdk from "@farcaster/frame-sdk";
+import { farcasterFrame } from "@farcaster/frame-wagmi-connector";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { useEffect } from "react";
 import { mainnet } from "viem/chains";
 import { createConfig, http, WagmiProvider } from "wagmi";
-import sdk from "@farcaster/frame-sdk";
 
 export const config = createConfig(
   getDefaultConfig({
     appName: "Juicebox Frame",
     walletConnectProjectId: "cd15473a8bd1a71d54fa4c0ed7cfd476",
     chains: [mainnet],
-    connectors: [frameConnector()],
+    connectors: [farcasterFrame()],
     transports: [http(process.env.NEXT_PUBLIC_RPC_HTTP), http()],
     ssr: false,
   }),

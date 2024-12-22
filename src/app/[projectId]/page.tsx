@@ -1,5 +1,5 @@
 import { getProject } from "@/api/project";
-import { ActivitySectionContainer } from "@/app/[projectId]/activity/component";
+import { ActivitySectionContainer } from "@/app/[projectId]/components/ActivitySection";
 import { Header } from "@/app/[projectId]/components/Header";
 import { APP_URL } from "@/lib/config";
 import { getCycleData } from "@/lib/rewards";

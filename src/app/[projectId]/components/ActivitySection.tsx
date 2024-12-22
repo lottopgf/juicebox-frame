@@ -11,8 +11,6 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { extent, scaleUtc, utcFormat } from "d3";
 import { fromUnixTime } from "date-fns";
-import { ExternalLinkIcon } from "lucide-react";
-import Link from "next/link";
 import {
   CartesianGrid,
   Line,

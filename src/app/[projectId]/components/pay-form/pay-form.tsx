@@ -1,35 +1,29 @@
 "use client";
 
 import { JBETHPaymentTerminalABI } from "@/abi/JBETHPaymentTerminal";
-import { getCycle, type CycleData } from "@/api/cycle";
+import { type CycleData } from "@/api/cycle";
 import { type Project } from "@/api/project";
-import { PayStep } from "./pay";
 import {
   JB_ETH_TOKEN_ADDRESS,
   JBETHPAYMENTTERMINAL_ADDRESS,
 } from "@/lib/config";
-import {
-  getTokenAToBQuote,
-  getTokenRewards,
-} from "@/lib/juicebox";
+import { formatNumber } from "@/lib/format";
+import { getTokenAToBQuote, getTokenRewards } from "@/lib/juicebox";
 import { FieldsSchema, type Fields } from "@/schemas/pay-from-schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { ConnectKitButton } from "connectkit";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAccount, useWriteContract } from "wagmi";
-import { ReviewForm } from "./review";
 import { formatUnits, parseEther, zeroHash } from "viem";
-import { formatNumber } from "@/lib/format";
+import { useAccount, useWriteContract } from "wagmi";
 import { CompletedStep } from "./completed";
+import { PayStep } from "./pay";
+import { ReviewForm } from "./review";
 
-const FormLayout = ({ children }: {
-  children: React.ReactNode;
-}) => (
+const FormLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col rounded-lg border border-slate-600 bg-slate-700 text-slate-100 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)]">
     {children}
   </div>
-)
+);
 
 export function PayForm({
   project,
@@ -40,7 +34,13 @@ export function PayForm({
   projectId: number;
   cycleData: CycleData | null;
 }) {
-  const { handleSubmit, control, watch, reset, formState: { isSubmitting } } = useForm<Fields>({
+  const {
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<Fields>({
     defaultValues: {
       amount: "0.01",
       message: "",
@@ -91,44 +91,32 @@ export function PayForm({
         ],
         address: JBETHPAYMENTTERMINAL_ADDRESS,
         value: BigInt(amount),
-      })
+      });
     });
   }, [address, handleSubmit, projectId, writeContractAsync]);
-
-  if (!address)
-    return (
-      <div className="p-4">
-        <header className="mb-8 space-y-4 border-b pb-4">
-          <ConnectKitButton />
-        </header>
-        <p>Please connect.</p>
-      </div>
-    );
 
   if (hash) {
     return (
       <FormLayout>
-        <CompletedStep hash={hash}
+        <CompletedStep
+          hash={hash}
           onDismiss={() => {
             reset({
               amount: "0.01",
               message: "",
               terms: false,
-            })
-            setStep('form')
+            });
+            setStep("form");
           }}
-          onTryAgain={() => setStep('review')}
+          onTryAgain={() => setStep("review")}
         />
       </FormLayout>
-    )
+    );
   }
 
   return (
-    <form
-      onSubmit={formOnSubmit}
-    >
+    <form onSubmit={formOnSubmit}>
       <FormLayout>
-
         {step === "form" ? (
           <PayStep
             control={control}

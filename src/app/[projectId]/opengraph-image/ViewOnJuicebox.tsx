@@ -1,7 +1,5 @@
-/** @jsxImportSource frog/jsx */
-
-import { IconArrow } from "@/graphics/IconArrow";
-import { LogoJuicebox } from "@/graphics/LogoJuicebox";
+import { IconArrow } from "@/app/[projectId]/opengraph-image/graphics/IconArrow";
+import { LogoJuicebox } from "@/app/[projectId]/opengraph-image/graphics/LogoJuicebox";
 
 export function ViewOnJuicebox() {
   return (

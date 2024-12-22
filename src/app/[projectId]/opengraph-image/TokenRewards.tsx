@@ -1,24 +1,15 @@
-/** @jsxImportSource frog/jsx */
-
 import { getCycle } from "@/api/cycle";
 import { formatEther } from "@/lib/format";
 import { getTokensPerEth } from "@/lib/juicebox";
 import { twMerge } from "tailwind-merge";
 
-export async function TokenRewards({
-  projectId,
-  cycleId,
+export function TokenRewards({
+  cycleData,
   tw,
 }: {
-  projectId: number;
-  cycleId: number;
+  cycleData: Awaited<ReturnType<typeof getCycle>>;
   tw?: string;
 }) {
-  const cycleData = await getCycle({
-    projectId,
-    cycleId,
-  });
-
   if (!cycleData) return <></>;
 
   const tokensPerEth = getTokensPerEth({
@@ -34,7 +25,7 @@ export async function TokenRewards({
   return (
     <div
       tw={twMerge(
-        "flex h-[115px] w-full flex-shrink-0 items-center justify-center px-12 text-center text-[44px] leading-none",
+        "flex w-full flex-shrink-0 items-center justify-center px-12 py-4 text-center text-4xl leading-none",
         tw,
       )}
     >
