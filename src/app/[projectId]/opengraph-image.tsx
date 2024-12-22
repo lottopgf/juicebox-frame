@@ -16,9 +16,7 @@ import {
   COLOR_BG_SPLIT_LIGHT,
   COLOR_TEXT_SPLIT,
 } from "@/styles/colors";
-import { readFileSync } from "fs";
 import { ImageResponse } from "next/og";
-import path from "path";
 import { twMerge } from "tailwind-merge";
 
 // Image metadata
@@ -29,14 +27,7 @@ export const size = {
 };
 
 export const contentType = "image/png";
-
-const agrandir = readFileSync(
-  path.resolve(process.cwd(), "./fonts/PPAgrandir-Medium.ttf"),
-);
-
-const beatrice = readFileSync(
-  path.resolve(process.cwd(), "./fonts/Beatrice-Regular.ttf"),
-);
+export const runtime = "edge";
 
 // Image generation
 export default async function Image({
@@ -44,6 +35,14 @@ export default async function Image({
 }: {
   params: { projectId: string };
 }) {
+  const agrandir = await fetch(
+    new URL("../fonts/PPAgrandir-Medium.ttf", import.meta.url),
+  ).then((res) => res.arrayBuffer());
+
+  const beatrice = await fetch(
+    new URL("../fonts/Beatrice-Regular.ttf", import.meta.url),
+  ).then((res) => res.arrayBuffer());
+
   const projectId = parseInt(params.projectId);
 
   const projectData = await getProject({ projectId });
