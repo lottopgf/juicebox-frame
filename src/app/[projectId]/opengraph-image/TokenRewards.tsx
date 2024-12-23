@@ -11,7 +11,7 @@ export function TokenRewards({
   cycleData: Awaited<ReturnType<typeof getCycle>>;
   tw?: string;
 }) {
-  if (!cycleData) return <></>;
+  if (!cycleData || cycleData.pausePay) return <></>;
 
   const { payerTokens } = getTokenAToBQuote(parseEther("1"), cycleData);
 

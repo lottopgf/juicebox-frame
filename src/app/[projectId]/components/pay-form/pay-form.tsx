@@ -95,6 +95,10 @@ export function PayForm({
     });
   }, [address, handleSubmit, projectId, writeContractAsync]);
 
+  if (!cycleData || cycleData.pausePay) {
+    return null;
+  }
+
   if (hash) {
     return (
       <FormLayout>
