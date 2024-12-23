@@ -1,3 +1,5 @@
+"use client";
+
 import type { Project } from "@/api/project";
 import { ViewOnJuicebox } from "@/app/[projectId]/components/ViewOnJuicebox";
 import { IconJuicebox } from "@/app/[projectId]/graphics/IconJuicebox";
@@ -5,6 +7,7 @@ import { formatEther } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
 import { getTrendingPercentage } from "@/lib/juicebox";
 import { cn } from "@/lib/utils";
+import sdk from "@farcaster/frame-sdk";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,6 +33,9 @@ export function Header({
         href={`https://juicebox.money/v2/p/${projectId}?tabid=about`}
         target="_top"
         className={cn(`block w-full bg-slate-950 text-white`)}
+        onClick={(e) => {
+          sdk.actions.openUrl(e.currentTarget.href);
+        }}
       >
         <div className="mx-auto flex w-full max-w-prose items-center justify-between px-4 py-2 md:py-4">
           <span className="flex-shrink-0 text-xl leading-normal"></span>

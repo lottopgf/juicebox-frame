@@ -1,3 +1,5 @@
+"use client";
+
 import type { Project } from "@/api/project";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,8 +8,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { formatEther } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Fields } from "@/schemas/pay-from-schema";
+import sdk from "@farcaster/frame-sdk";
 import { ErrorMessage } from "@hookform/error-message";
-import { AlertTriangleIcon, ChevronDownIcon } from "lucide-react";
+import { AlertTriangleIcon, ChevronDownIcon, Loader } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -17,7 +20,6 @@ import {
   type Control,
 } from "react-hook-form";
 import { ETH } from "./constants";
-import { Loader } from "lucide-react";
 
 function Notice({ notice }: { notice: string | undefined }) {
   const [open, setOpen] = useState(false);
@@ -114,9 +116,12 @@ export function ReviewForm({
             I understand and accept{" "}
             {project.metadata.payDisclosure && `this project's notice and`} the{" "}
             <Link
-              target="_top"
               href="https://docs.juicebox.money/dev/learn/risks"
+              target="_top"
               className="underline decoration-dotted"
+              onClick={(e) => {
+                sdk.actions.openUrl(e.currentTarget.href);
+              }}
             >
               risks
             </Link>{" "}

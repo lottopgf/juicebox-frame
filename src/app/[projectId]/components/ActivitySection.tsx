@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import sdk from "@farcaster/frame-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { extent, scaleUtc, utcFormat } from "d3";
 import { fromUnixTime } from "date-fns";
@@ -129,6 +130,9 @@ export function ActivitySectionContainer({ projectId }: { projectId: number }) {
             href={`https://juicebox.money/v2/p/${projectId}?tabid=activity`}
             target="_top"
             className="flex items-center gap-1 text-sm font-medium text-slate-200"
+            onClick={(e) => {
+              sdk.actions.openUrl(e.currentTarget.href);
+            }}
           >
             See more <ExternalLinkIcon className="size-4" />
           </Link>
