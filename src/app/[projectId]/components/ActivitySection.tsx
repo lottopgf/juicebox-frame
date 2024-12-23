@@ -127,7 +127,7 @@ export function ActivitySectionContainer({ projectId }: { projectId: number }) {
           <h2 className="text-2xl font-medium">Activity</h2>
           <Link
             href={`https://juicebox.money/v2/p/${projectId}?tabid=activity`}
-            target="_blank"
+            target="_top"
             className="flex items-center gap-1 text-sm font-medium text-slate-200"
           >
             See more <ExternalLinkIcon className="size-4" />

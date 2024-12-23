@@ -28,7 +28,7 @@ export function Header({
     <header className="mb-6 space-y-4">
       <Link
         href={`https://juicebox.money/v2/p/${projectId}?tabid=about`}
-        target="_blank"
+        target="_top"
         className={cn(`block w-full bg-slate-950 text-white`)}
       >
         <div className="mx-auto flex w-full max-w-prose items-center justify-between px-4 py-2 md:py-4">

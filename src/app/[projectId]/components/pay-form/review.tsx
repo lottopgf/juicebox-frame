@@ -114,7 +114,7 @@ export function ReviewForm({
             I understand and accept{" "}
             {project.metadata.payDisclosure && `this project's notice and`} the{" "}
             <Link
-              target="_blank"
+              target="_top"
               href="https://docs.juicebox.money/dev/learn/risks"
               className="underline decoration-dotted"
             >
