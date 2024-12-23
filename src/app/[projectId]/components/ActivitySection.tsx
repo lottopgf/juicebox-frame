@@ -11,6 +11,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { extent, scaleUtc, utcFormat } from "d3";
 import { fromUnixTime } from "date-fns";
+import { ExternalLinkIcon } from "lucide-react";
+import Link from "next/link";
 import {
   CartesianGrid,
   Line,
@@ -123,6 +125,13 @@ export function ActivitySectionContainer({ projectId }: { projectId: number }) {
       <div className="border-grey-200 space-y-4 rounded-lg border border-slate-600 bg-slate-700 p-4 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)]">
         <header className="flex items-center justify-between text-slate-100">
           <h2 className="text-2xl font-medium">Activity</h2>
+          <Link
+            href={`https://juicebox.money/v2/p/${projectId}?tabid=activity`}
+            target="_blank"
+            className="flex items-center gap-1 text-sm font-medium text-slate-200"
+          >
+            See more <ExternalLinkIcon className="size-4" />
+          </Link>
         </header>
         {isLoading ? (
           <ActivitySectionSkeleton />
