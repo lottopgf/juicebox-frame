@@ -1,7 +1,10 @@
+import { JBControllerABI } from "@/abi/JBController";
 import type { CycleData } from "@/api/cycle";
+import { client, JBCONTROLLER_ADDRESS } from "@/lib/config";
+import { readContract } from "viem/actions";
 
-const BPS = 10_000n;
-const WAD = BigInt(1e18);
+export const BPS = 10_000n;
+export const WAD = BigInt(1e18);
 
 export function getTokensPerEth({
   reservedRate,
@@ -53,8 +56,8 @@ export function getTokenRewards(cycleData: CycleData) {
 
   if (tokensPerEth === 0n) return null;
 
-  const receivedRate = 10000n - BigInt(cycleData.reservedRate);
-  return (tokensPerEth * receivedRate) / 10000n;
+  const receivedRate = BPS - BigInt(cycleData.reservedRate);
+  return (tokensPerEth * receivedRate) / BPS;
 }
 
 export function getTokenAToBQuote(
@@ -76,4 +79,13 @@ export function getTokenAToBQuote(
     reservedTokens,
     totalTokens,
   };
+}
+
+export async function getCurrentCycle(projectId: number) {
+  return readContract(client, {
+    address: JBCONTROLLER_ADDRESS,
+    abi: JBControllerABI,
+    functionName: "currentFundingCycleOf",
+    args: [BigInt(projectId)],
+  });
 }

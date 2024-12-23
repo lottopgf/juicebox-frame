@@ -2,6 +2,7 @@ import { getProject } from "@/api/project";
 import { ActivitySectionContainer } from "@/app/[projectId]/components/ActivitySection";
 import { Header } from "@/app/[projectId]/components/Header";
 import { APP_URL } from "@/lib/config";
+import { getCurrentCycle } from "@/lib/juicebox";
 import { getCycleData } from "@/lib/rewards";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -47,9 +48,11 @@ export default async function PaymentApp({
 
   const project = await getProject({ projectId });
 
+  const [currentCycle] = await getCurrentCycle(projectId);
+
   const cycleData = await getCycleData({
     projectId,
-    cycleId: project.latestFundingCycle,
+    cycleId: Number(currentCycle.number),
   });
 
   return (

@@ -18,13 +18,14 @@ import {
 } from "valibot";
 
 const cycleQuery = gql`
-  query Cycle($Cycle: ID! = "2-618-3") {
+  query Cycle($Cycle: ID!) {
     fundingCycles(where: { id: $Cycle }) {
       startTimestamp # when the cycle starts
       endTimestamp # when the cycle ends
       weight # the number of tokens issued per ETH paid in (fixed-point with 18 decimals)
       reservedRate # the percentage of tokens being reserved, as a fraction out of 10_000
       useDataSourceForPay # whether the NFT contract is being used when the project is paid
+      pausePay # whether payments are paused
     }
   }
 `;
@@ -38,6 +39,7 @@ const CycleSchema = object({
   ),
   reservedRate: number(),
   useDataSourceForPay: boolean(),
+  pausePay: boolean(),
 });
 
 export type CycleData = InferOutput<typeof CycleSchema>;

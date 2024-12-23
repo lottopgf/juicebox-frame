@@ -1,7 +1,8 @@
 import { getCycle } from "@/api/cycle";
 import { formatEther } from "@/lib/format";
-import { getTokensPerEth } from "@/lib/juicebox";
+import { getTokenAToBQuote } from "@/lib/juicebox";
 import { twMerge } from "tailwind-merge";
+import { parseEther } from "viem";
 
 export function TokenRewards({
   cycleData,
@@ -12,15 +13,9 @@ export function TokenRewards({
 }) {
   if (!cycleData) return <></>;
 
-  const tokensPerEth = getTokensPerEth({
-    reservedRate: cycleData.reservedRate,
-    weight: cycleData.weight,
-  });
+  const { payerTokens } = getTokenAToBQuote(parseEther("1"), cycleData);
 
-  if (tokensPerEth === 0n) return <></>;
-
-  const receivedRate = 10000n - BigInt(cycleData.reservedRate);
-  const receivedTokensPerEth = (tokensPerEth * receivedRate) / 10000n;
+  if (!payerTokens || payerTokens === 0n) return <></>;
 
   return (
     <div
@@ -29,7 +24,7 @@ export function TokenRewards({
         tw,
       )}
     >
-      Receive {formatEther(receivedTokensPerEth)} tokens per ETH paid
+      Receive {formatEther(payerTokens)} tokens per ETH paid
     </div>
   );
 }

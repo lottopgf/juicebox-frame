@@ -9,7 +9,7 @@ import { IconEthereum } from "@/app/[projectId]/opengraph-image/graphics/IconEth
 import { IconJuicebox } from "@/app/[projectId]/opengraph-image/graphics/IconJuicebox";
 import { formatEther, formatExcerpt } from "@/lib/format";
 import { cidFromURL, ipfsURL } from "@/lib/ipfs";
-import { getTrendingPercentage } from "@/lib/juicebox";
+import { getCurrentCycle, getTrendingPercentage } from "@/lib/juicebox";
 import {
   COLOR_BG_SPLIT,
   COLOR_BG_SPLIT_DARK,
@@ -47,16 +47,18 @@ export default async function Image({
 
   const projectData = await getProject({ projectId });
 
-  const { latestFundingCycle, metadata, paymentsCount, volume } = projectData;
+  const { metadata, paymentsCount, volume } = projectData;
 
   const trendingPercentage = getTrendingPercentage({
     totalVolume: projectData.volume,
     trendingVolume: projectData.trendingVolume,
   });
 
+  const [currentCycle] = await getCurrentCycle(projectId);
+
   const cycleData = await getCycle({
     projectId,
-    cycleId: latestFundingCycle,
+    cycleId: Number(currentCycle.number),
   });
 
   const logoURL = ipfsURL(cidFromURL(projectData.metadata.logoUri));

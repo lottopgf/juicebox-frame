@@ -1,18 +1,12 @@
 "use server";
 
-import { CACHE_TIME, CHAIN, TIMELINE_RANGE_IN_DAYS } from "@/lib/config";
+import { CACHE_TIME, client, TIMELINE_RANGE_IN_DAYS } from "@/lib/config";
 import { parseEther } from "@/lib/format";
 import { graphClient } from "@/lib/graph";
 import EthDater from "@landas/ethereum-block-by-date";
 import { subDays, subMinutes } from "date-fns";
 import { gql } from "graphql-request";
 import { unstable_cache } from "next/cache";
-import { createPublicClient, fallback, http } from "viem";
-
-const client = createPublicClient({
-  chain: CHAIN,
-  transport: fallback([http(process.env.NEXT_PUBLIC_RPC_HTTP), http()]),
-});
 
 interface EthBlock {
   date: string;
