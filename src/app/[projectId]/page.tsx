@@ -22,12 +22,12 @@ export async function generateMetadata({
     other: {
       "fc:frame": JSON.stringify({
         version: "next",
-        imageUrl: `${APP_URL}/${projectId}/images/home`,
+        imageUrl: `${APP_URL}/${projectId}/frame-image`,
         button: {
           title: "Learn more & contribute",
           action: {
             type: "launch_frame",
-            name: "Juicebox Frame",
+            name: project.metadata.name,
             url: `${APP_URL}/${projectId}`,
             splashImageUrl: `${APP_URL}/splash.png`,
             splashBackgroundColor: "#16141d",

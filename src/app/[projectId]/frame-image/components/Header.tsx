@@ -1,4 +1,4 @@
-import { ViewOnJuicebox } from "@/app/[projectId]/opengraph-image/ViewOnJuicebox";
+import { ViewOnJuicebox } from "@/app/[projectId]/frame-image/components/ViewOnJuicebox";
 import { twMerge } from "tailwind-merge";
 
 export function Header({ page, tw }: { page?: string; tw?: string }) {

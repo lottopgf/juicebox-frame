@@ -1,5 +1,5 @@
-import { IconArrow } from "@/app/[projectId]/opengraph-image/graphics/IconArrow";
-import { LogoJuicebox } from "@/app/[projectId]/opengraph-image/graphics/LogoJuicebox";
+import { IconArrow } from "@/app/[projectId]/frame-image/graphics/IconArrow";
+import { LogoJuicebox } from "@/app/[projectId]/frame-image/graphics/LogoJuicebox";
 
 export function ViewOnJuicebox() {
   return (
