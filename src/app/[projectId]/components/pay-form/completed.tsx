@@ -39,11 +39,8 @@ export function CompletedStep({
                 target="_blank"
                 className="underline decoration-dotted"
                 onClick={async (e) => {
-                  try {
-                    await sdk.actions.ready();
-                    e.preventDefault();
-                    sdk.actions.openUrl(e.currentTarget.href);
-                  } catch (e) {}
+                  await sdk.actions.openUrl(e.currentTarget.href);
+                  e.preventDefault();
                 }}
               >
                 {formatAddress(hash)}
@@ -74,7 +71,15 @@ export function CompletedStep({
           <Button onClick={onDismiss}>Close</Button>
         </>
       );
-  }, [hash, isFailure, isSuccess, isWaiting, onDismiss, onTryAgain]);
+  }, [
+    chain.blockExplorers,
+    hash,
+    isFailure,
+    isSuccess,
+    isWaiting,
+    onDismiss,
+    onTryAgain,
+  ]);
 
   return (
     <div className="flex flex-col gap-4 p-3 pt-4">
