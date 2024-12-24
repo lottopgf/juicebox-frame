@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Check, X, Loader } from "lucide-react";
+import { formatAddress } from "@/lib/format";
+import sdk from "@farcaster/frame-sdk";
+import { Check, Loader, X } from "lucide-react";
+import Link from "next/link";
 import { useMemo } from "react";
 import type { Hex } from "viem";
-import { useWaitForTransactionReceipt } from "wagmi";
+import { useChains, useWaitForTransactionReceipt } from "wagmi";
 
 export function CompletedStep({
   hash,
@@ -13,6 +16,7 @@ export function CompletedStep({
   onDismiss: () => void;
   onTryAgain: () => void;
 }) {
+  const [chain] = useChains();
   const { data: receipt, isLoading: isWaiting } = useWaitForTransactionReceipt({
     hash: hash,
   });
@@ -28,6 +32,24 @@ export function CompletedStep({
             <Loader className="h-6 w-6 animate-spin text-blue-500" />
           </div>
           <h1 className="text-2xl font-medium">Waiting for confirmation</h1>
+          {!!chain.blockExplorers && (
+            <p className="text-sm text-slate-200">
+              <Link
+                href={`${chain.blockExplorers?.default.url}/tx/${hash}`}
+                target="_blank"
+                className="underline decoration-dotted"
+                onClick={async (e) => {
+                  try {
+                    await sdk.actions.ready();
+                    e.preventDefault();
+                    sdk.actions.openUrl(e.currentTarget.href);
+                  } catch (e) {}
+                }}
+              >
+                {formatAddress(hash)}
+              </Link>
+            </p>
+          )}
         </>
       );
 
@@ -52,7 +74,7 @@ export function CompletedStep({
           <Button onClick={onDismiss}>Close</Button>
         </>
       );
-  }, [isFailure, isSuccess, isWaiting, onDismiss, onTryAgain]);
+  }, [hash, isFailure, isSuccess, isWaiting, onDismiss, onTryAgain]);
 
   return (
     <div className="flex flex-col gap-4 p-3 pt-4">
