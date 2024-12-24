@@ -11,9 +11,14 @@ export const APP_URL =
 
 export const CHAIN = mainnet;
 
+export const transport = fallback([
+  http(process.env.NEXT_PUBLIC_RPC_HTTP),
+  http(),
+]);
+
 export const client = createPublicClient({
   chain: CHAIN,
-  transport: fallback([http(process.env.NEXT_PUBLIC_RPC_HTTP), http()]),
+  transport,
 });
 
 export const TIMELINE_RANGE_IN_DAYS = 30;
