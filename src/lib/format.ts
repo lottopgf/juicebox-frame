@@ -1,14 +1,18 @@
 import sanitize from "sanitize-html";
-import { formatEther as rawFormatEther } from "viem";
+import { formatEther as rawFormatEther, type Address } from "viem";
 
 export function parseEther(amount: bigint) {
   return Number(rawFormatEther(amount));
 }
 
+const formatter = Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+
 export function formatEther(amount: bigint) {
-  return Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
-    parseEther(amount),
-  );
+  return formatter.format(parseEther(amount));
+}
+
+export function formatNumber(amount: number) {
+  return formatter.format(amount);
 }
 
 export function formatRichText(text: string) {
@@ -29,4 +33,9 @@ export function formatExcerpt(text: string) {
   }
 
   return plainText;
+}
+
+export function formatAddress(address?: Address, length: number = 4) {
+  if (!address) return null;
+  return `${address.slice(0, length + 2)}…${address.slice(-length)}`;
 }

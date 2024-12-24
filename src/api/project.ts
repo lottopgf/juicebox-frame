@@ -1,3 +1,5 @@
+"use server";
+
 import { CACHE_TIME } from "@/lib/config";
 import { graphClient } from "@/lib/graph";
 import { cidFromURL, decodeEncodedIPFSUri, ipfsURL } from "@/lib/ipfs";
@@ -152,3 +154,5 @@ export async function getProject(params: GetProjectParams) {
 
   return { ...projectData, metadata: metadataResult.output };
 }
+
+export type Project = Awaited<ReturnType<typeof getProject>>;

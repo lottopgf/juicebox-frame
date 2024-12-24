@@ -1,5 +1,10 @@
-const BPS = 10_000n;
-const WAD = BigInt(1e18);
+import { JBControllerABI } from "@/abi/JBController";
+import type { CycleData } from "@/api/cycle";
+import { client, JBCONTROLLER_ADDRESS } from "@/lib/config";
+import { readContract } from "viem/actions";
+
+export const BPS = 10_000n;
+export const WAD = BigInt(1e18);
 
 export function getTokensPerEth({
   reservedRate,
@@ -39,4 +44,48 @@ export function getTrendingPercentage({
   }
 
   return percentRounded;
+}
+
+export const MAX_RESERVED_PERCENT = 10_000;
+
+export function getTokenRewards(cycleData: CycleData) {
+  const tokensPerEth = getTokensPerEth({
+    reservedRate: cycleData.reservedRate,
+    weight: cycleData.weight,
+  });
+
+  if (tokensPerEth === 0n) return null;
+
+  const receivedRate = BPS - BigInt(cycleData.reservedRate);
+  return (tokensPerEth * receivedRate) / BPS;
+}
+
+export function getTokenAToBQuote(
+  tokenAAmount: bigint,
+  cycleParams: CycleData,
+) {
+  const { weight, reservedRate } = cycleParams;
+  const weightRatio = BigInt(10 ** 18);
+  const totalTokens = (weight * tokenAAmount) / weightRatio;
+  const reservedTokens =
+    (weight * BigInt(reservedRate) * tokenAAmount) /
+    BigInt(MAX_RESERVED_PERCENT) /
+    weightRatio;
+
+  const payerTokens = totalTokens - reservedTokens;
+
+  return {
+    payerTokens,
+    reservedTokens,
+    totalTokens,
+  };
+}
+
+export async function getCurrentCycle(projectId: number) {
+  return readContract(client, {
+    address: JBCONTROLLER_ADDRESS,
+    abi: JBControllerABI,
+    functionName: "currentFundingCycleOf",
+    args: [BigInt(projectId)],
+  });
 }
