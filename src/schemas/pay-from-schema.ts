@@ -5,9 +5,8 @@ export const FieldsSchema = v.object({
   amount: v.pipe(
     v.string(),
     v.minLength(1, "Amount is required"),
-    v.transform((input) => parseEther(input)),
     v.custom(
-      (input) => typeof input === "bigint" && input > 0n,
+      (input) => !isNaN(Number(input)) && Number(input) > 0,
       "Amount must be greater than 0",
     ),
   ),
